@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { getCocktailDetails } from '../services/cocktailDB'
 export default {
     name: 'CocktailDetail',
     data: () => ({
@@ -16,10 +16,9 @@ export default {
     },
     methods: {
         async getCocktail() {
-            let cocktailId = this.$route.params.cocktailId;
-            let cocktailDetails = await axios.get(`https://thecocktaildb.com/api/json/v1/1/lookup.php?i=${cocktailId}`);
-            this.cocktail = cocktailDetails.data.drinks[0];
+            let cocktailDetails = await getCocktailDetails(this.$route.params.cocktailId)
+            this.cocktail = cocktailDetails
         }
-    }
+    },
 }
 </script>
