@@ -1,7 +1,7 @@
 <template>
-  <section>
-    <h1>{{ cocktail.strDrink }}</h1>
-  </section>
+    <section>
+        <h1>{{ cocktail.strDrink }}</h1>
+    </section>
 </template>
 
 <script>

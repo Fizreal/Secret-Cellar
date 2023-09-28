@@ -1,18 +1,21 @@
 <template>
   <div class="card">
-    <img :src="cocktail.strDrinkThumb" :alt="cocktail.strDrink">
-    <h3>{{ cocktail.strDrink }}</h3>
-    <p>{{ cocktail.strCategory }}</p>
-    <p v-if="cocktail.author">By: {{ cocktail.author }}</p>
+    <img :src="image_url" :alt="name">
+    <h3>{{ name }}</h3>
+    <p>{{ category }}</p>
+    <p v-if="author">By: {{ author }}</p>
   </div>
 </template>
 
 <script>
 export default {
     name: 'CocktailDetail',
-    data: () => ({
-        cocktail: {}
-    })
+    props: {
+      image_url: String,
+      name: String,
+      author: String,
+      category: String
+    }
 }
 </script>
 
