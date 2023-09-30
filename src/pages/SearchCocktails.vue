@@ -4,7 +4,7 @@
       <input type="text" :value="searchQuery" @change="handleChange">
       <button>Search</button>
     </form>
-    <section id="results" v-if="results" v-for="drink in searchResults" :key="game.id">
+    <section id="results" v-if="results" v-for="drink in searchResults" :key="drink.idDrink">
       <CocktailCard :name="drink.strDrink" :category="drink.strCategory" :image_url="drink.strDrinkThumb" />
     </section>
   </section>
