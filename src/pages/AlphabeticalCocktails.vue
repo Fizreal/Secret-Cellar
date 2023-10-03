@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import { watch } from 'vue';
 import { letterSearch } from '@/services/cocktailDB';
 import CocktailCard from '@/components/CocktailCard.vue';
 
