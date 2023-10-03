@@ -5,7 +5,7 @@
       <button>Search</button>
     </form>
     <section id="results" v-if="results" v-for="drink in searchResults" :key="drink.idDrink">
-      <CocktailCard :name="drink.strDrink" :category="drink.strCategory" :image_url="drink.strDrinkThumb" />
+      <CocktailCard :name="drink.strDrink" :category="drink.strCategory" :image_url="drink.strDrinkThumb" @click="selectDrink(drink.idDrink)"/>
     </section>
   </section>
 </template>
@@ -28,6 +28,9 @@ export default {
       },
       handleChange(e) {
         this.searchQuery = e.target.value
+      },
+      selectDrink(cocktailId) {
+        this.$router.push(`/cocktails/${cocktailId}`)
       }
     }
 }
