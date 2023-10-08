@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { getCocktailDetails } from '../services/cocktailDB'
+import { getCocktailDetails } from '@/services/cocktailServices';
 export default {
     name: 'CocktailDetail',
     data: () => ({

@@ -4,6 +4,7 @@ import LoginUser from './pages/LoginUser'
 import RegisterUser from './pages/RegisterUser'
 import SearchCocktails from './pages/SearchCocktails'
 import AlphabeticalCocktails from './pages/AlphabeticalCocktails'
+import AlcoholCocktails from './pages/AlcoholCocktails'
 import CocktailDetail from './pages/CocktailDetail'
 
 const routes = [
@@ -32,6 +33,11 @@ const routes = [
     path: '/cocktails/browse',
     component: AlphabeticalCocktails,
     name: 'AlphabeticalCocktails'
+  },
+  {
+    path: '/cocktails/ingredient',
+    component: AlcoholCocktails,
+    name: 'AlcoholCocktails'
   }
 ]
 

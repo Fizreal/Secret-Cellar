@@ -1,7 +1,8 @@
 <template>
   <section id="search">
     <form @submit="searchCocktails">
-      <select v-for="ingredient in ingredients" v-model="selectedAlcohol" @change="handleChange">
+      <label for="ingredientFilter">Browse by alcohol:</label>
+      <select id="ingredientFilter" v-for="ingredient in ingredients" v-model="selectedAlcohol" @change="handleChange">
       <option :value="ingredient">{{ ingredient }}</option>
     </select>
     </form>
