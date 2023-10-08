@@ -24,6 +24,9 @@ export default {
         searchResults: [],
         selectedAlcohol: 'Amaretto'
     }),
+    components: {
+      CocktailCard
+    },
     mounted() {
       this.searchCocktails();
     },

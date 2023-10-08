@@ -54,6 +54,9 @@ export default {
         searchResults: [],
         currentLetter: ''
     }),
+    components: {
+      CocktailCard
+    },
     mounted() {
       this.currentLetter = 'A'
       this.getCocktails();

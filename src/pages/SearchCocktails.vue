@@ -15,6 +15,9 @@ import CocktailCard from '@/components/CocktailCard.vue';
 import { nameSearch } from '@/services/cocktailDB';
 export default {
     name: 'SearchCocktails',
+    components: {
+      CocktailCard
+    },
     data: () => ({
         searchResults: [],
         searchQuery: ""

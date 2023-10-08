@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <header>
-      <NavBar />
-    </header>
+    <SideBar />
     <main>
       <router-view></router-view>
     </main>
@@ -10,12 +8,12 @@
 </template>
 
 <script>
-  import NavBar from './components/NavBar.vue'
+  import SideBar from './components/NavBar.vue'
 
   export default {
     name: 'App',
     components: {
-      NavBar
+      SideBar
     },
     mounted () {
     },
@@ -23,7 +21,3 @@
     }
   }
 </script>
-
-<style>
-
-</style>
