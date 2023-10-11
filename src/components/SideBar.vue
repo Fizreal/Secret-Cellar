@@ -7,16 +7,16 @@
       </router-link>
     </header>
     <ul>
-      <li>Browse Drinks</li>
+      <li>Drinks</li>
       <ul>
         <li>
-          <router-link to="/cocktails/search">by name</router-link>
+          <router-link to="/cocktails/search">Search</router-link>
         </li>
         <li>
-          <router-link to="/cocktails/ingredient">by ingredient</router-link>
+          <router-link to="/cocktails/ingredient">Ingredients</router-link>
         </li>
         <li>
-          <router-link to="/cocktails/browse">alphabetically</router-link>
+          <router-link to="/cocktails/browse">Browse</router-link>
         </li>
       </ul>
       <ul v-if="authenticated.user">
@@ -25,10 +25,6 @@
       </ul>
       <li v-else>Sign in</li>
     </ul>
-
-    
-    
-
   </aside>
 
 </template>

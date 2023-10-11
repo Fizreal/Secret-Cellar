@@ -1,6 +1,21 @@
 <template>
-    <section>
-        <h1>{{ cocktail.strDrink }}</h1>
+    <section id="drinkDetails">
+        <h1>{{ cocktail.name }}</h1>
+        <img :src="cocktail.image_url" :alt="cocktail.name">
+        <section id="ingredients">
+            <h2>Ingredients</h2>
+            <ul v-for="ingredient in cocktail.ingredients" :key="ingredient._id">
+                <li><span v-if="ingredient.measure">{{ ingredient.measure }}&nbsp;</span>{{ ingredient.name }}</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Instructions</h2>
+            <div v-for="instruction in cocktail.instructions">
+                <button></button>
+            </div>
+            <p>{{ directions }}</p>
+            <h3>Recommended glass: {{ cocktail.glass }}</h3>
+        </section>
     </section>
 </template>
 
@@ -9,7 +24,9 @@ import { getCocktailDetails } from '@/services/cocktailServices';
 export default {
     name: 'CocktailDetail',
     data: () => ({
-        cocktail: {}
+        cocktail: {},
+        instructions: 'en',
+        directions: ''
     }),
     mounted() {
         this.getCocktail();
