@@ -11,7 +11,7 @@
         <section>
             <h2>Instructions</h2>
             <div >
-                <button :id="instruction.language" v-for="instruction in cocktail.instructions" :key="instruction.language" @click="() => setLanguage(instruction.language)"></button>
+                <img :id="instruction.language" :src="`/${instruction.language}.png`" :title="`${instruction.language}`" v-for="instruction in cocktail.instructions" :key="instruction.language" @click="() => setLanguage(instruction.language)">
             </div>
             <p>{{ directions }}</p>
             <h3>Recommended glass: {{ cocktail.glass }}</h3>
@@ -27,6 +27,7 @@ export default {
         cocktail: {},
         language: '',
         directions: ''
+
     }),
     mounted() {
         this.getCocktail()
