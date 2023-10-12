@@ -4,8 +4,10 @@
       <input type="text" :value="searchQuery" @change="handleChange">
       <button>Search</button>
     </form>
-    <section id="results" v-if="results" v-for="drink in searchResults" :key="drink.idDrink">
-      <CocktailCard :name="drink.strDrink" :category="drink.strCategory" :image_url="drink.strDrinkThumb" @click="selectDrink(drink.idDrink)"/>
+    <section id="results" v-if="searchResults.length">
+      <div v-for="drink in searchResults" :key="drink.idDrink">
+        <CocktailCard :name="drink.strDrink" :category="drink.strCategory" :image_url="drink.strDrinkThumb" @click="selectDrink(drink.idDrink)"/>
+      </div>
     </section>
   </section>
 </template>
@@ -25,7 +27,7 @@ export default {
     methods: {
       async searchCocktails(e) {
         e.preventDefault()
-        let res = await nameSearch(searchQuery)
+        let res = await nameSearch(this.searchQuery)
         this.searchResults = res
         this.searchQuery = ""
       },

@@ -19,7 +19,7 @@
           <router-link to="/cocktails/browse">Browse</router-link>
         </li>
       </ul>
-      <ul v-if="authenticated.user">
+      <ul v-if="user">
         <li>Profile</li>
         <li>Sign out</li>
       </ul>
@@ -39,7 +39,8 @@ import { authenticated } from '@/authenticated';
     methods: {
       handleCocktails () {
         this.expandCocktails = this.expandCocktails ? false : true
-      }
+      },
+      user: authenticated.user
     }
   }
 </script>

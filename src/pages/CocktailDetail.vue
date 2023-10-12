@@ -10,8 +10,8 @@
         </section>
         <section>
             <h2>Instructions</h2>
-            <div v-for="instruction in cocktail.instructions">
-                <button></button>
+            <div v-for="instruction in cocktail.instructions" :key="instruction.language">
+                <button :id="instruction.language"></button>
             </div>
             <p>{{ directions }}</p>
             <h3>Recommended glass: {{ cocktail.glass }}</h3>
