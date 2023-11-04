@@ -32,7 +32,7 @@
 <script>
 import { authenticated } from '@/authenticated';
   export default {
-    name: 'SideBar',
+    name: 'NavBar',
     data: () => ({
       expandCocktails: false
     }),

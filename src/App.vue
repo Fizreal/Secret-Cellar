@@ -1,19 +1,19 @@
 <template>
   <div id="app">
-    <SideBar />
-    <main>
+    <NavBar />
+    <main class="flex justify-center">
       <router-view></router-view>
     </main>
   </div>
 </template>
 
 <script>
-  import SideBar from './components/SideBar.vue'
+  import NavBar from './components/NavBar.vue';
 
   export default {
     name: 'App',
     components: {
-      SideBar
+      NavBar
     },
     mounted () {
     },
