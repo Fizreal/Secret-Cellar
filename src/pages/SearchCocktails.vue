@@ -1,13 +1,11 @@
 <template>
-  <section id="search">
+  <section id="Search Drinks" class="flex flex-col items-center w-4/5">
     <form @submit="searchCocktails">
       <input type="text" :value="searchQuery" @change="handleChange">
       <button>Search</button>
     </form>
-    <section id="results" v-if="searchResults.length">
-      <div v-for="drink in searchResults" :key="drink.idDrink">
-        <CocktailCard :name="drink.strDrink" :category="drink.strCategory" :image_url="drink.strDrinkThumb" @click="selectDrink(drink.idDrink)"/>
-      </div>
+    <section class="flex flex-wrap justify-center">
+        <CocktailCard v-for="drink in searchResults" :key="drink.idDrink" :name="drink.strDrink" :category="drink.strCategory" :image_url="drink.strDrinkThumb" @click="selectDrink(drink.idDrink)"/>
     </section>
   </section>
 </template>

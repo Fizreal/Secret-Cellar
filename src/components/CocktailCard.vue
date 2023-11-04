@@ -1,10 +1,12 @@
 <template>
-  <div class="card">
+  <section :id="name" class="m-2">
     <img :src="image_url" :alt="name">
-    <h3>{{ name }}</h3>
-    <p>{{ category }}</p>
-    <p v-if="author">By: {{ author }}</p>
-  </div>
+    <section class="grid grid-cols-2 grid-rows-2 border">
+      <h3 class="col-span-2 text-center text-xl">{{ name }}</h3>
+      <p class="text-center" v-if="category">Type: {{ category }}</p>
+      <p class="text-center" v-if="author">By: {{ author }}</p>
+    </section>
+  </section>
 </template>
 
 <script>
