@@ -1,7 +1,7 @@
 import { reactive } from 'vue'
 
 export const authenticated = reactive({
-  user: null,
+  user: '1',
   signIn(user) {
     this.user = user
   },

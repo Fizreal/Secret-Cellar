@@ -1,31 +1,27 @@
 <template>
-  <aside>
     <header>
       <router-link to="/">
         <img src="" alt="logo">
         <h1>Site name</h1>
       </router-link>
+      <nav class="relative flex">
+        <div class="">Drinks
+          <div class="drop">
+            <router-link to="/cocktails/search">Search</router-link>
+            <router-link to="/cocktails/ingredient">Ingredients</router-link>
+            <router-link to="/cocktails/browse">Browse</router-link>
+          </div>
+        </div>
+        <div class="" v-if="user">Profile
+          <div class="">
+            <router-link to="/profile/favorites">Favorites</router-link>
+            <router-link to="/cocktails/ingredient"></router-link>
+            <button @click="handleSignOut">Sign out</button>
+          </div>
+        </div>
+        <router-link to="/login" class="item" v-else >Sign In</router-link>
+      </nav>
     </header>
-    <ul>
-      <li>Drinks</li>
-      <ul>
-        <li>
-          <router-link to="/cocktails/search">Search</router-link>
-        </li>
-        <li>
-          <router-link to="/cocktails/ingredient">Ingredients</router-link>
-        </li>
-        <li>
-          <router-link to="/cocktails/browse">Browse</router-link>
-        </li>
-      </ul>
-      <ul v-if="user">
-        <li>Profile</li>
-        <li>Sign out</li>
-      </ul>
-      <li v-else>Sign in</li>
-    </ul>
-  </aside>
 
 </template>
 
@@ -34,17 +30,23 @@ import { authenticated } from '@/authenticated';
   export default {
     name: 'NavBar',
     data: () => ({
-      expandCocktails: false
+      expandCocktails: false,
+      user: null
     }),
+    mounted() {
+      this.getUser()
+    },
     methods: {
       handleCocktails () {
         this.expandCocktails = this.expandCocktails ? false : true
       },
-      user: authenticated.user
+      getUser () {
+        this.user = authenticated.user
+      },
+      handleSignOut () {
+        authenticated.signOut()
+        this.getUser()
+      }
     }
   }
 </script>
-
-<style scoped>
-
-</style>
