@@ -6,7 +6,7 @@
           <h1>Site name</h1>
         </router-link>
         <div class="dropdown">
-          <button class="">Drinks</button>
+          <button class="dropdownButton">Drinks</button>
           <div class="content">
             <router-link to="/cocktails/search">Search</router-link>
             <router-link to="/cocktails/ingredient">Ingredients</router-link>
@@ -14,16 +14,15 @@
           </div>
         </div>
         <div class="dropdown" v-if="user">
-          <button>Profile</button>
+          <button class="dropdownButton">Profile</button>
           <div class="content">
             <router-link to="/profile/favorites">Favorites</router-link>
-            <router-link to="/cocktails/ingredient"></router-link>
+            <router-link to="/cocktails/ingredient">Collections</router-link>
             <button @click="handleSignOut">Sign out</button>
           </div>
         </div>
-        <router-link to="/login" v-else >Sign In</router-link>        
-
-        <button @click="toggleNav" class="expand">hamburger</button>
+        <router-link to="/login" v-else class="signin">Sign In</router-link>        
+        <button @click="toggleNav" aria-label="Expand Nav" class="expand"><img src="/hamburger.png" alt="Open"></button>
       </nav>
     </header>
 
@@ -64,11 +63,15 @@ nav {
   overflow: hidden;
   display: flex;
   justify-content: end;
+  background-color: #06142E;
+  color: white;
+  padding-right: 75px;
 }
 
 .home {
   display: flex;
   flex-grow: 1;
+  padding: 14px 16px;
 }
 
 nav a {
@@ -86,23 +89,51 @@ nav a {
   float: left;
 }
 
-.dropdown button {
+.dropdown .dropdownButton {
   border: none;
   outline: none;
   margin: 0;
+  background-color: inherit;
+  padding: 14px 16px;
+}
+
+.signin {
+  background-color: inherit;
+  padding: 14px 16px;
+}
+
+.signin:hover {
+  background-color: #473E66;
 }
 
 .content {
   display: none;
   position: absolute;
   z-index: 1;
-  /* box shadow and min-width */
+  background-color: #BD83B8;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  min-width: 150px;
 }
 
-.content * {
+.content a {
   float: none;
   display: block;
   text-align: left;
+  padding: 12px 16px;
+}
+
+.content button {
+  text-align: left;
+  min-width: 150px;
+  padding: 12px 16px;
+}
+
+.dropdown:hover .dropdownButton {
+  background-color: #473E66;
+}
+
+.content a:hover, .content button:hover {
+  background-color: #F5D7DB;
 }
 
 .dropdown:hover .content {
@@ -121,12 +152,16 @@ nav a:not(:first-child), .dropdown button{
 nav.expanded {
   position: relative;
   display: block;
+  padding: 0;
 }
 
-nav.expanded .expand {
+.expand {
   position: absolute;
   right: 0;
   top: 0;
+  aspect-ratio: 1/1;
+  height: 52px;
+  padding: 12px;
 }
 
 nav.expanded .dropdown {
@@ -140,6 +175,7 @@ nav.expanded a {
   float: none;
   display: block;
   text-align: left;
+  width: 100%;
 }
 
 nav.expanded .home {
@@ -152,5 +188,6 @@ nav.expanded .dropdown button {
   width: 100%;
   text-align: left;
 }
+
 }
 </style>
