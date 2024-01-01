@@ -6,18 +6,25 @@
           <h1>Site name</h1>
         </router-link>
         <div class="dropdown">
-          <button class="dropdownButton">Drinks</button>
+          <button class="dropdownButton">Browse Drinks</button>
           <div class="content">
-            <router-link to="/cocktails/search">Search</router-link>
-            <router-link to="/cocktails/ingredient">Ingredients</router-link>
-            <router-link to="/cocktails/browse">Browse</router-link>
+            <router-link to="/cocktails/search">By Name</router-link>
+            <router-link to="/cocktails/ingredient">By Ingredients</router-link>
+            <router-link to="/cocktails/browse">Alphabetically</router-link>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropdownButton">Community</button>
+          <div class="content">
+            <router-link to="/">Search</router-link>
+            <router-link to="/">Create Drink</router-link>
           </div>
         </div>
         <div class="dropdown" v-if="user">
           <button class="dropdownButton">Profile</button>
           <div class="content">
             <router-link to="/profile/favorites">Favorites</router-link>
-            <router-link to="/cocktails/ingredient">Collections</router-link>
+            <router-link to="/profile/collections">Collections</router-link>
             <button @click="handleSignOut">Sign out</button>
           </div>
         </div>
@@ -62,7 +69,7 @@ import { authenticated } from '@/authenticated';
 nav {
   overflow: hidden;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   background-color: #06142E;
   color: white;
   padding-right: 75px;
@@ -120,12 +127,14 @@ nav a {
   display: block;
   text-align: left;
   padding: 12px 16px;
+  transition: all 0.3s ease-in-out;
 }
 
 .content button {
   text-align: left;
   min-width: 150px;
   padding: 12px 16px;
+  transition: all 0.3s ease-in-out;
 }
 
 .dropdown:hover .dropdownButton {

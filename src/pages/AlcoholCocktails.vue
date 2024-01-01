@@ -1,8 +1,8 @@
 <template>
   <section id="search" class="flex flex-col items-center w-4/5">
-    <form @submit="searchCocktails">
-      <label for="ingredientFilter">Browse by alcohol:</label>
-      <select id="ingredientFilter" v-model="selectedAlcohol" @change="handleChange">
+    <form @submit="searchCocktails" class="my-4">
+      <label for="ingredientFilter" class="mr-2 text-xl text-[#F5D7DB] font-medium tracking-wide">Browse by alcohol:</label>
+      <select id="ingredientFilter" v-model="selectedAlcohol" @change="handleChange" class="rounded px-1 py-0.5 border border-[#BD83B8] bg-[#F5D7DB]">
         <option v-for="ingredient in ingredients" :key="ingredient" :value="ingredient">{{ ingredient }}</option>
       </select>
     </form>
@@ -18,7 +18,7 @@ import { ingredientSearch } from '@/services/cocktailDB';
 
 
 export default {
-  name: 'SearchCocktails',
+  name: 'AlcoholCocktails',
   data: () => ({
     searchResults: [],
     selectedAlcohol: 'Amaretto',
