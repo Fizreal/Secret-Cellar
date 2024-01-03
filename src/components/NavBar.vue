@@ -41,21 +41,12 @@ import { authenticated } from '@/authenticated';
     name: 'NavBar',
     data: () => ({
       expandNav: false,
-      user: null
+      user: authenticated.user
     }),
-    mounted() {
-      this.getUser()
-    },
     methods: {
-      handleCocktails () {
-        this.expandCocktails = this.expandCocktails ? false : true
-      },
-      getUser () {
-        this.user = authenticated.user
-      },
       handleSignOut () {
         authenticated.signOut()
-        this.getUser()
+        this.user = authenticated.user
       },
       toggleNav () {
         this.expandNav = !this.expandNav
@@ -114,12 +105,15 @@ nav a {
 }
 
 .content {
-  display: none;
+  display: block;
   position: absolute;
-  z-index: 1;
+  overflow: hidden;
   background-color: #BD83B8;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   min-width: 150px;
+  height: 0;
+  z-index: 1;
+  transition: all 0.3s ease-in-out;
 }
 
 .content a {
@@ -146,11 +140,11 @@ nav a {
 }
 
 .dropdown:hover .content {
-  display: block;
+  height: auto;
 }
 
 @media screen and (max-width: 600px) {
-nav a:not(:first-child), .dropdown button{
+nav a:not(:first-child), .dropdown .dropdownButton{
   display: none;
 }
 .expand {
@@ -176,6 +170,16 @@ nav.expanded {
 nav.expanded .dropdown {
   float: none;
 }
+
+.content {
+  height: 0;
+  overflow: hidden;
+}
+
+.dropdown:hover .content {
+  height: auto;
+}
+
 nav.expanded .content {
   position: relative;
 }

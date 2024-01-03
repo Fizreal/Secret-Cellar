@@ -16,8 +16,11 @@
       NavBar
     },
     mounted () {
+      this.checkSession()
     },
     methods: {
+      async updateCollections() {},
+      async checkSession () {}
     }
   }
 </script>

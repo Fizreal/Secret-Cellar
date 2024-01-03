@@ -6,6 +6,6 @@ export const authenticated = reactive({
     this.user = user
   },
   signOut() {
-    this.user = null
+    this.user = {}
   }
 })

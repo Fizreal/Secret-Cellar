@@ -1,7 +1,19 @@
 <template>
     <section id="Drink Details" class="flex flex-wrap w-4/5 mt-4">
         <div class="w-full md:grid md:grid-cols-2">
-            <img :src="cocktail.image_url" :alt="cocktail.name">
+            <div>
+                <img :src="cocktail.image_url" :alt="cocktail.name" class="drink">
+                <div class="flex w-full max-w-[400px] justify-around">
+                    <div class="likes">
+                        <button :aria-label="(this.favorite) ? 'Unfavorite' : 'Favorite'" @click="(this.favorite) ? favoriteCocktail : unfavoriteCocktail">
+                            <img :src="(this.favorite) ? '/liked.png' : '/like.png'" :alt="(this.favorite) ? 'Unfavorite' : 'Favorite'">
+                        </button>
+                        <p>{{this.cocktail.likes.length}}</p>
+                    </div>
+                    <button>Add to collection</button>
+                </div>
+
+            </div>
             <div class="mt-4 sm:mt-0">
                 <h1 class="w-full text-center">{{ cocktail.name }}</h1>
                 <div id="Ingredients" class="flex flex-col items-center w-full mt-4">
@@ -24,17 +36,21 @@
 </template>
 
 <script>
-import { getCocktailDetails } from '@/services/cocktailServices';
+import { getCocktailDetails, favoriteCocktail, unfavoriteCocktail } from '@/services/cocktailServices';
+import { collections } from '@/collections';
+
 export default {
     name: 'CocktailDetail',
     data: () => ({
+        user: authenticated.user,
         cocktail: {},
+        favorite: false,
         language: '',
         directions: ''
-
     }),
     mounted() {
         this.getCocktail()
+        this.checkFavorite()
     },
     watch: {
         language() {
@@ -47,6 +63,13 @@ export default {
             this.cocktail = cocktailDetails.data
             this.language = cocktailDetails.data.instructions[0].language
         },
+        checkFavorite() {
+            const favorites = collections.favorites.map(favorite => favorite._id)
+            const idx = favorites.indexOf(this.cocktail._id)
+            if (idx !== -1) {
+                this.favorite = true
+            }
+        },
         setLanguage(language) {
             this.language = language
         },
@@ -56,7 +79,38 @@ export default {
             if (idx !== -1) {
                 this.directions = this.cocktail.instructions[idx].steps
             }
+        },
+        async favoriteDrink () {
+            await favoriteCocktail(this.cocktail._id)
+            collections.addToCollection('favorites', this.cocktail)
+            this.cocktail.likes.push(this.user._id)
+            this.favorite = true
+        },
+        async unforavoriteDrink () {
+            await unfavoriteCocktail(this.cocktail._id)
+            collections.removeFromCollection('favorites', this.cocktail)
+            const idx = this.cocktail.likes.indexOf(this.user._id)
+            this.cocktail.likes.splice(idx, 1)
+            this.favorite = false
         }
     },
 }
 </script>
+
+<style scoped>
+.drink {
+    width: clamp(150px, 100%, 400px);
+    aspect-ratio: 1/1;
+    justify-self: center;
+}
+
+.likes {
+    display: flex;
+}
+
+.likes button {
+    width: 25px;
+}
+
+
+</style>

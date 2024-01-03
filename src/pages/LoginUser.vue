@@ -31,20 +31,19 @@ export default {
   }),
   methods: {
     async handleSubmit(e) {
-    try {
-      e.preventDefault()
-      const payload = await SignInUser(this.formValues)
-      authenticated.signIn(payload)
-      this.formValues = {email: '', password: ''}
-      router.push('/')
-    } catch (error) {
-      this.formValues = { ...this.formValues, password: '' }
-      this.showPassword = false
-      this.errorMessage = error.response.data
-    }
-  },
+      try {
+        e.preventDefault()
+        const payload = await SignInUser(this.formValues)
+        authenticated.signIn(payload)
+        this.formValues = {email: '', password: ''}
+        router.push('/')
+      } catch (error) {
+        this.formValues = { ...this.formValues, password: '' }
+        this.showPassword = false
+        this.errorMessage = error.response.data
+      }
+    },
     handleChange(e) {
-      console.log(e.target.name)
       this.formValues = { ...this.formValues, [e.target.name]: e.target.value }
     },
     togglePassword() {
