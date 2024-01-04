@@ -62,8 +62,8 @@ export default {
     methods: {
         async getCocktail() {
             let cocktailDetails = await getCocktailDetails(this.$route.params.cocktailId)
-            this.cocktail = cocktailDetails.data
-            this.language = cocktailDetails.data.instructions[0].language
+            this.cocktail = cocktailDetails
+            this.language = cocktailDetails.instructions[0].language
         },
         checkFavorite() {
             const favorites = collections.favorites.map(favorite => favorite._id)
@@ -99,7 +99,7 @@ export default {
             this.favorite = false
             this.disableFavorite = false
         }
-    },
+    }
 }
 </script>
 
