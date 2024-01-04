@@ -5,7 +5,7 @@
                 <img :src="cocktail.image_url" :alt="cocktail.name" class="drink">
                 <div class="flex w-full max-w-[400px] justify-around">
                     <div class="likes">
-                        <button :aria-label="(this.favorite) ? 'Unfavorite' : 'Favorite'" @click="(this.favorite) ? favoriteCocktail : unfavoriteCocktail">
+                        <button :aria-label="(this.favorite) ? 'Unfavorite' : 'Favorite'" @click="(this.favorite) ? favoriteCocktail : unfavoriteCocktail" :disabled="disableFavorite">
                             <img :src="(this.favorite) ? '/liked.png' : '/like.png'" :alt="(this.favorite) ? 'Unfavorite' : 'Favorite'">
                         </button>
                         <p>{{this.cocktail.likes.length}}</p>
@@ -36,7 +36,8 @@
 </template>
 
 <script>
-import { getCocktailDetails, favoriteCocktail, unfavoriteCocktail } from '@/services/cocktailServices';
+import { getCocktailDetails } from '@/services/cocktailServices';
+import { favoriteCocktail, unfavoriteCocktail } from '@/services/collectionServices';
 import { collections } from '@/collections';
 
 export default {
@@ -45,6 +46,7 @@ export default {
         user: authenticated.user,
         cocktail: {},
         favorite: false,
+        disableFavorite: false,
         language: '',
         directions: ''
     }),
@@ -81,17 +83,21 @@ export default {
             }
         },
         async favoriteDrink () {
+            this.disableFavorite = true
             await favoriteCocktail(this.cocktail._id)
             collections.addToCollection('favorites', this.cocktail)
             this.cocktail.likes.push(this.user._id)
             this.favorite = true
+            this.disableFavorite = false
         },
         async unforavoriteDrink () {
+            this.disableFavorite = true
             await unfavoriteCocktail(this.cocktail._id)
             collections.removeFromCollection('favorites', this.cocktail)
             const idx = this.cocktail.likes.indexOf(this.user._id)
             this.cocktail.likes.splice(idx, 1)
             this.favorite = false
+            this.disableFavorite = false
         }
     },
 }

@@ -3,17 +3,18 @@ import { reactive } from 'vue'
 export const collections = reactive({
   collections: {},
   addCollection(collection) {
-    this.collections[collection.name] = collection.array
+    this.collections[collection.name] = collection.cocktails
   },
   removeCollection(collection) {
     delete this.collections[collection.name]
   },
-  addToCollection(collection, item) {
-    this.collections[collection.name].push(item)
+  addToCollection(collection, cocktail) {
+    this.collections[collection.name].push(cocktail)
   },
-  removeFromCollection(collection, item) {
-    const array = this.collections[collection.name].map((item) => item.id)
-    const index = array.indexOf(item.id)
-    this.collections[collection.name].splice(index, 1)
+  removeFromCollection(collection, cocktail) {
+    let idx = this.collections[collection.name]
+      .map((cocktail) => cocktail._id)
+      .indexOf(cocktail._id)
+    this.collections[collection.name].splice(idx, 1)
   }
 })
