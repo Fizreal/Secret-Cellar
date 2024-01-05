@@ -19,8 +19,10 @@
 
 <script>
 import router from '@/router'
-import { SignInUser } from '@/services/Auth'
 import { authenticated } from '@/authenticated';
+import { collections } from '@/collections';
+import { SignInUser } from '@/services/Auth'
+import { getFavorites, getCollections } from '@/services/collectionServices';
 
 export default {
   name: 'LoginUser',
@@ -30,11 +32,20 @@ export default {
     errorMessage: ''
   }),
   methods: {
+    async updateCollections() {
+        let favorites = await getFavorites();
+        let allCollections = await getCollections();
+        collections.addCollection(favorites)
+        allCollections.forEach(collection => {
+          collections.addCollection(collection)
+        })
+      },
     async handleSubmit(e) {
       try {
         e.preventDefault()
         const payload = await SignInUser(this.formValues)
         authenticated.signIn(payload)
+        await this.updateCollections()
         this.formValues = {email: '', password: ''}
         router.push('/')
       } catch (error) {

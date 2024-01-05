@@ -37,9 +37,18 @@ export default {
     showPasswordConfirm: false,
     errorMessage: ''
   }),
+  watch: {
+    'formValues.confirmPassword': {
+      handler() {
+        this.errorMessage = this.formValues.password !== this.formValues.confirmPassword ? 'Passwords do not match' : ''
+      },
+      deep: true
+    }
+  },
   methods: {
     async handleSubmit(e) {
       try {
+        if (this.formValues.password !== this.formValues.confirmPassword) return
         e.preventDefault()
         await RegisterUser({name: this.formValues.name, email: this.formValues.email, password: this.formValues.password})
         this.formValues = {name: '',email: '', password: '', confirmPassword: ''}
@@ -52,7 +61,6 @@ export default {
       }
     },
     handleChange(e) {
-      console.log(e.target.name)
       this.formValues = { ...this.formValues, [e.target.name]: e.target.value }
     },
     togglePassword() {
