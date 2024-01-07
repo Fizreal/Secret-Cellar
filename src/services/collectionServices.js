@@ -6,12 +6,12 @@ export const getFavorites = async () => {
 }
 
 export const favoriteCocktail = async (cocktailId) => {
-  const response = await Client.post(`/favorite/add/${cocktailId}`)
+  const response = await Client.put(`/favorite/add/${cocktailId}`)
   return response.data
 }
 
 export const unfavoriteCocktail = async (cocktailId) => {
-  const response = await Client.post(`/favorite/remove/${cocktailId}`)
+  const response = await Client.put(`/favorite/remove/${cocktailId}`)
   return response.data
 }
 

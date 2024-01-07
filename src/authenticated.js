@@ -1,11 +1,12 @@
 import { reactive } from 'vue'
 
 export const authenticated = reactive({
-  user: {},
+  user: null,
   signIn(user) {
     this.user = user
   },
   signOut() {
-    this.user = {}
+    this.user = null
+    localStorage.removeItem('token')
   }
 })

@@ -23,7 +23,7 @@
         <div class="dropdown" v-if="user">
           <button class="dropdownButton">Profile</button>
           <div class="content">
-            <router-link to="/profile/favorites">Favorites</router-link>
+            <router-link to="/profile/collections/favorites">Favorites</router-link>
             <router-link to="/profile/collections">Collections</router-link>
             <button @click="handleSignOut">Sign out</button>
           </div>
@@ -37,22 +37,29 @@
 
 <script>
 import { authenticated } from '@/authenticated';
-  export default {
-    name: 'NavBar',
-    data: () => ({
-      expandNav: false,
-      user: authenticated.user
-    }),
-    methods: {
-      handleSignOut () {
-        authenticated.signOut()
-        this.user = authenticated.user
-      },
-      toggleNav () {
-        this.expandNav = !this.expandNav
-      }
+import { watchEffect } from 'vue';
+
+export default {
+  name: 'NavBar',
+  data: () => ({
+    expandNav: false,
+    user: authenticated.user
+  }),
+  mounted() {
+    watchEffect(() => {
+      this.user = authenticated.user;
+    });
+  },
+  methods: {
+    handleSignOut () {
+      authenticated.signOut();
+      this.user = authenticated.user;
+    },
+    toggleNav () {
+      this.expandNav = !this.expandNav;
     }
   }
+}
 </script>
 
 <style scoped>

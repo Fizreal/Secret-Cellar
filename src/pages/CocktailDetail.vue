@@ -5,10 +5,10 @@
                 <img :src="cocktail.image_url" :alt="cocktail.name" class="drink">
                 <div class="flex w-full max-w-[400px] justify-around">
                     <div class="likes">
-                        <button :aria-label="(this.favorite) ? 'Unfavorite' : 'Favorite'" @click="(this.favorite) ? favoriteCocktail : unfavoriteCocktail" :disabled="disableFavorite">
+                        <button :aria-label="(this.favorite) ? 'Unfavorite' : 'Favorite'" @click="toggleFavorite" :disabled="disableFavorite">
                             <img :src="(this.favorite) ? '/liked.png' : '/like.png'" :alt="(this.favorite) ? 'Unfavorite' : 'Favorite'">
                         </button>
-                        <p>{{this.cocktail.likes.length}}</p>
+                        <p>{{this.cocktail ? this.cocktail.likes?.length : 0}}</p>
                     </div>
                     <button>Add to collection</button>
                 </div>
@@ -39,6 +39,7 @@
 import { getCocktailDetails } from '@/services/cocktailServices';
 import { favoriteCocktail, unfavoriteCocktail } from '@/services/collectionServices';
 import { collections } from '@/collections';
+import { authenticated } from '@/authenticated';
 
 export default {
     name: 'CocktailDetail',
@@ -55,6 +56,17 @@ export default {
         this.checkFavorite()
     },
     watch: {
+        '$route.params.cocktailId': {
+            immediate: true,
+            handler: 'getCocktail'
+    },
+    'authenticated.user': {
+        immediate: true,
+        handler(newValue) {
+            this.user = newValue;
+            this.checkFavorite();
+        }
+    },
         language() {
             this.setDirections()
         }
@@ -66,8 +78,10 @@ export default {
             this.language = cocktailDetails.instructions[0].language
         },
         checkFavorite() {
-            const favorites = collections.favorites.map(favorite => favorite._id)
-            const idx = favorites.indexOf(this.cocktail._id)
+            if (!this.user) return
+            const favorites = collections.collections.favorites
+            const favoriteIds = favorites.map(favorite => favorite._id)
+            const idx = favoriteIds.indexOf(this.cocktail._id)
             if (idx !== -1) {
                 this.favorite = true
             }
@@ -80,6 +94,13 @@ export default {
             let idx = this.cocktail.instructions.findIndex(findLanguageIndex)
             if (idx !== -1) {
                 this.directions = this.cocktail.instructions[idx].steps
+            }
+        },
+        toggleFavorite() {
+            if (this.favorite) {
+                this.unforavoriteDrink()
+            } else {
+                this.favoriteDrink()
             }
         },
         async favoriteDrink () {

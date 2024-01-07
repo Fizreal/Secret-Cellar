@@ -47,7 +47,7 @@ const routes = [
     name: 'CocktailCollections'
   },
   {
-    path: '/profile/collections:collectionName',
+    path: '/profile/collections/:collectionName',
     component: CollectionDetail,
     name: 'CollectionDetail'
   }

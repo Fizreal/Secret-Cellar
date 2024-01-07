@@ -2,14 +2,14 @@
   <section>
     <h1>Collections</h1>
     <div>
-      <router-link :to="'/' + collection.name" v-for="collection in Object.keys(collections)" :key="collection.name">
+      <router-link :to="'/profile/collections/' + collection" v-for="collection in Object.keys(collections)" :key="collection">
         <div>
-          <img src="" alt="" v-if="collection.cocktails.length === 0">
-          <img :src="collection.cocktails[0].image_url" :alt="collection.cocktails[0].name" v-else-if="collection.cocktails.length === 0">
-          <img :src="collection.cocktails[n-1].image_url" :alt="collection.cocktails[n-1].name" v-else v-for="n in 4">
+          <img src="" alt="" v-if="collections[collection].length === 0">
+          <img :src="collections[collection][0].image_url" :alt="collections[collection][0].name" v-else-if="collections[collection].length < 4">
+          <img :src="collections[collection][n-1].image_url" :alt="collections[collection][n-1].name" v-else v-for="n in 4" :key="collections[collection][n].idDrink">
         </div>
-        <h2>{{ collection.name[0].toUpperCase() + collection.name.slice(1) }}</h2>
-        <p>{{ collection.cocktails.length }} drinks</p>
+        <h2>{{ collection[0].toUpperCase() + collection.slice(1) }}</h2>
+        <p>{{ collections[collection].length }} drinks</p>
       </router-link>
     </div>
     <div id="Create collection modal">
@@ -29,7 +29,7 @@ import { createCollection } from '@/services/collectionServices';
 export default {
   name: 'CocktailCollections',
   data: () => ({
-    collections: collections
+    collections: collections.collections
   }),
   methods: {
     async createCollection(e) {
@@ -42,3 +42,4 @@ export default {
     }
   }
 }
+</script>
