@@ -8,7 +8,7 @@
                         <button :aria-label="(this.favorite) ? 'Unfavorite' : 'Favorite'" @click="toggleFavorite" :disabled="disableFavorite">
                             <img :src="(this.favorite) ? '/liked.png' : '/like.png'" :alt="(this.favorite) ? 'Unfavorite' : 'Favorite'">
                         </button>
-                        <p>{{this.cocktail ? this.cocktail.likes?.length : 0}}</p>
+                        <p>{{this.cocktail?.likes}}</p>
                     </div>
                     <button>Add to collection</button>
                 </div>
@@ -44,7 +44,6 @@ import { authenticated } from '@/authenticated';
 export default {
     name: 'CocktailDetail',
     data: () => ({
-        user: authenticated.user,
         cocktail: {},
         favorite: false,
         disableFavorite: false,
@@ -53,20 +52,29 @@ export default {
     }),
     mounted() {
         this.getCocktail()
-        this.checkFavorite()
+    },
+    computed: {
+        user() {
+        return authenticated.user;
+        }
     },
     watch: {
         '$route.params.cocktailId': {
             immediate: true,
             handler: 'getCocktail'
-    },
-    'authenticated.user': {
-        immediate: true,
-        handler(newValue) {
-            this.user = newValue;
-            this.checkFavorite();
-        }
-    },
+        },
+        user: {
+            immediate: true,
+            handler: 'checkFavorite'
+        },
+        'collections.collections': {
+            immediate: true,
+            handler: 'checkFavorite'
+        },
+        cocktail: {
+            immediate: true,
+            handler: 'checkFavorite'
+        },
         language() {
             this.setDirections()
         }
@@ -80,8 +88,8 @@ export default {
         checkFavorite() {
             if (!this.user) return
             const favorites = collections.collections.favorites
-            const favoriteIds = favorites.map(favorite => favorite._id)
-            const idx = favoriteIds.indexOf(this.cocktail._id)
+            const favoriteIds = favorites?.map(favorite => favorite._id)
+            const idx = favoriteIds?.indexOf(this.cocktail._id)
             if (idx !== -1) {
                 this.favorite = true
             }
@@ -107,7 +115,7 @@ export default {
             this.disableFavorite = true
             await favoriteCocktail(this.cocktail._id)
             collections.addToCollection('favorites', this.cocktail)
-            this.cocktail.likes.push(this.user._id)
+            this.cocktail.likes++
             this.favorite = true
             this.disableFavorite = false
         },
@@ -115,8 +123,7 @@ export default {
             this.disableFavorite = true
             await unfavoriteCocktail(this.cocktail._id)
             collections.removeFromCollection('favorites', this.cocktail)
-            const idx = this.cocktail.likes.indexOf(this.user._id)
-            this.cocktail.likes.splice(idx, 1)
+            this.cocktail.likes--
             this.favorite = false
             this.disableFavorite = false
         }
