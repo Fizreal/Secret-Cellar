@@ -8,6 +8,7 @@ import AlcoholCocktails from './pages/AlcoholCocktails'
 import CocktailDetail from './pages/CocktailDetail'
 import CocktailCollections from './pages/CocktailCollections'
 import CollectionDetail from './pages/CollectionDetail'
+import CreateCocktail from './pages/CreateCocktail'
 
 const routes = [
   { path: '/', component: HomePage, name: 'Homepage' },
@@ -50,6 +51,11 @@ const routes = [
     path: '/profile/collections/:collectionName',
     component: CollectionDetail,
     name: 'CollectionDetail'
+  },
+  {
+    path: '/community/new',
+    component: CreateCocktail,
+    name: 'CreateCocktail'
   }
 ]
 

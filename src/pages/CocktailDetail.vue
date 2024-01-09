@@ -45,10 +45,8 @@ export default {
     name: 'CocktailDetail',
     data: () => ({
         cocktail: {},
-        favorite: false,
         disableFavorite: false,
-        language: '',
-        directions: ''
+        language: ''
     }),
     mounted() {
         this.getCocktail()
@@ -56,27 +54,30 @@ export default {
     computed: {
         user() {
         return authenticated.user;
+        },
+        favorite() {
+            if (!this.user) return false
+            const favorites = collections.collections.favorites
+            const favoriteIds = favorites?.map(favorite => favorite._id)
+            const idx = favoriteIds?.indexOf(this.cocktail._id)
+            if (idx !== -1) {
+                return true
+            }
+            return false
+        },
+        directions() {
+            const findLanguageIndex = (instruction) => instruction.language === this.language
+            let idx = this.cocktail.instructions?.findIndex(findLanguageIndex)
+            if (idx !== -1) {
+                return this.cocktail.instructions[idx].steps
+            }
+            return ''
         }
     },
     watch: {
         '$route.params.cocktailId': {
             immediate: true,
             handler: 'getCocktail'
-        },
-        user: {
-            immediate: true,
-            handler: 'checkFavorite'
-        },
-        'collections.collections': {
-            immediate: true,
-            handler: 'checkFavorite'
-        },
-        cocktail: {
-            immediate: true,
-            handler: 'checkFavorite'
-        },
-        language() {
-            this.setDirections()
         }
     },
     methods: {
@@ -85,24 +86,8 @@ export default {
             this.cocktail = cocktailDetails
             this.language = cocktailDetails.instructions[0].language
         },
-        checkFavorite() {
-            if (!this.user) return
-            const favorites = collections.collections.favorites
-            const favoriteIds = favorites?.map(favorite => favorite._id)
-            const idx = favoriteIds?.indexOf(this.cocktail._id)
-            if (idx !== -1) {
-                this.favorite = true
-            }
-        },
         setLanguage(language) {
             this.language = language
-        },
-        setDirections() {
-            const findLanguageIndex = (instruction) => instruction.language === this.language
-            let idx = this.cocktail.instructions.findIndex(findLanguageIndex)
-            if (idx !== -1) {
-                this.directions = this.cocktail.instructions[idx].steps
-            }
         },
         toggleFavorite() {
             if (this.favorite) {
@@ -116,7 +101,6 @@ export default {
             await favoriteCocktail(this.cocktail._id)
             collections.addToCollection('favorites', this.cocktail)
             this.cocktail.likes++
-            this.favorite = true
             this.disableFavorite = false
         },
         async unforavoriteDrink () {
@@ -124,7 +108,6 @@ export default {
             await unfavoriteCocktail(this.cocktail._id)
             collections.removeFromCollection('favorites', this.cocktail)
             this.cocktail.likes--
-            this.favorite = false
             this.disableFavorite = false
         }
     }
@@ -145,6 +128,5 @@ export default {
 .likes button {
     width: 25px;
 }
-
 
 </style>
