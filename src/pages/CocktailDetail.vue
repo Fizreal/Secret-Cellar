@@ -1,5 +1,13 @@
 <template>
-    <section id="Drink Details" class="flex flex-wrap w-4/5 mt-4">
+    <section v-if="!cocktail">
+        <div v-if="loading">
+            <h1>Loading...</h1>
+        </div>
+        <div v-else>
+            <h1>Not Found</h1>
+        </div>
+    </section>
+    <section id="Drink Details" class="flex flex-wrap w-4/5 mt-4" v-else>
         <div class="w-full md:grid md:grid-cols-2">
             <div>
                 <img :src="cocktail.image_url" :alt="cocktail.name" class="drink">
@@ -8,7 +16,7 @@
                         <button :aria-label="(this.favorite) ? 'Unfavorite' : 'Favorite'" @click="toggleFavorite" :disabled="disableFavorite">
                             <img :src="(this.favorite) ? '/liked.png' : '/like.png'" :alt="(this.favorite) ? 'Unfavorite' : 'Favorite'">
                         </button>
-                        <p>{{this.cocktail?.likes}}</p>
+                        <p>{{this.cocktail.likes}}</p>
                     </div>
                     <button>Add to collection</button>
                 </div>
@@ -44,7 +52,8 @@ import { authenticated } from '@/authenticated';
 export default {
     name: 'CocktailDetail',
     data: () => ({
-        cocktail: {},
+        loading: true,
+        cocktail: null,
         disableFavorite: false,
         language: ''
     }),
@@ -82,9 +91,17 @@ export default {
     },
     methods: {
         async getCocktail() {
-            let cocktailDetails = await getCocktailDetails(this.$route.params.cocktailId)
-            this.cocktail = cocktailDetails
-            this.language = cocktailDetails.instructions[0].language
+            this.loading = true
+            this.cocktail = null
+            try {
+                let cocktailDetails = await getCocktailDetails(this.$route.params.cocktailId)
+                this.cocktail = cocktailDetails
+                this.language = cocktailDetails.instructions[0].language
+                this.loading = false
+            } catch (error) {
+                console.log(error) 
+                this.loading = false
+            }
         },
         setLanguage(language) {
             this.language = language
