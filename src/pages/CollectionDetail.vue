@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import { watch } from 'vue';
 import { collections } from '@/collections';
 import CocktailCard from '@/components/CocktailCard.vue';
 
@@ -20,16 +19,12 @@ export default {
   components: {
     CocktailCard
   },
-  mounted() {
-    this.getCollection()
-    watch(() => collections.collections[this.$route.params.collectionName], newVal => {
-      this.collection = newVal;
-    });
+  computed: {
+    collection() {
+      return collections.collections[this.$route.params.collectionName].drinks
+    }
   },
   methods: {
-    getCollection() {
-      this.collection = collections.collections[this.$route.params.collectionName]
-    },
     selectDrink(cocktailId) {
       this.$router.push(`/cocktails/${cocktailId}`)
     }

@@ -18,9 +18,29 @@
                         </button>
                         <p>{{this.cocktail.likes}}</p>
                     </div>
-                    <button>Add to collection</button>
+                    <div class="popover">
+                        <button>Add to collection</button>
+                        <div class="collections">
+                            <div class="collection" v-for="collection in collections">
+                                <button @click="addToCollection(collection)" v-if="!collection.inCollection">
+                                    <img src="/plus.png" alt="Add" class="rounded-full bg-green-600">
+                                </button>
+                                <button v-else>
+                                    <img src="/minus.png" alt="Remove" class="rounded-full bg-red-600">
+                                </button>
+                                <p>{{ collection.name }}</p>
+                            </div>
+                            <div class="collection">
+                                <form @submit="createCollection">
+                                    <button>
+                                        <img src="" alt="Add">
+                                    </button>
+                                    <input type="text" >
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
             <div class="mt-4 sm:mt-0">
                 <h1 class="w-full text-center">{{ cocktail.name }}</h1>
@@ -44,10 +64,10 @@
 </template>
 
 <script>
-import { getCocktailDetails } from '@/services/cocktailServices';
-import { favoriteCocktail, unfavoriteCocktail } from '@/services/collectionServices';
-import { collections } from '@/collections';
-import { authenticated } from '@/authenticated';
+import { getCocktailDetails } from '@/services/cocktailServices'
+import { favoriteCocktail, unfavoriteCocktail, addToCollection, createCollection } from '@/services/collectionServices'
+import { collections } from '@/collections'
+import { authenticated } from '@/authenticated'
 
 export default {
     name: 'CocktailDetail',
@@ -55,7 +75,9 @@ export default {
         loading: true,
         cocktail: null,
         disableFavorite: false,
-        language: ''
+        language: '',
+        collectionForm: {
+            name: ''}
     }),
     mounted() {
         this.getCocktail()
@@ -66,7 +88,7 @@ export default {
         },
         favorite() {
             if (!this.user) return false
-            const favorites = collections.collections.favorites
+            const favorites = collections.collections.favorites.drinks
             const favoriteIds = favorites?.map(favorite => favorite._id)
             const idx = favoriteIds?.indexOf(this.cocktail._id)
             if (idx !== -1) {
@@ -81,6 +103,21 @@ export default {
                 return this.cocktail.instructions[idx].steps
             }
             return ''
+        },
+        collections() {
+            let availableCollections = []
+            let collectionNames = Object.keys(collections.collections)
+            for (let i = 0; i < collectionNames.length; i++) {
+                if(collectionNames[i] === 'favorites') continue
+                let collection = collections.collections[collectionNames[i]]
+                if (collection.drinks?.findIndex(drink => drink._id === this.cocktail._id) === -1) {
+                    collections.push({name: collectionNames[i], collection: collection, id: collection.id, inCollection: false})
+                } else {
+                    collections.push({name: collectionNames[i], collection: collection, id: collection.id, inCollection: true})
+                }
+            }
+            availableCollections.sort((a, b) => a.inCollection - b.inCollection)
+            return availableCollections
         }
     },
     watch: {
@@ -115,17 +152,42 @@ export default {
         },
         async favoriteDrink () {
             this.disableFavorite = true
-            await favoriteCocktail(this.cocktail._id)
-            collections.addToCollection('favorites', this.cocktail)
-            this.cocktail.likes++
+            try {
+                await favoriteCocktail(this.cocktail._id)
+                collections.addToCollection('favorites', this.cocktail)
+                this.cocktail.likes++
+            } catch (error) {
+                console.log(error)
+            }
             this.disableFavorite = false
         },
         async unforavoriteDrink () {
             this.disableFavorite = true
-            await unfavoriteCocktail(this.cocktail._id)
-            collections.removeFromCollection('favorites', this.cocktail)
-            this.cocktail.likes--
+            try {
+                await unfavoriteCocktail(this.cocktail._id)
+                collections.removeFromCollection('favorites', this.cocktail)
+                this.cocktail.likes--
+            } catch (error) {
+                console.log(error)
+            }
             this.disableFavorite = false
+        },
+        async addToCollection(collection) {
+            try {
+                await addToCollection(collection.id, this.cocktail._id)
+                collections.addToCollection(collection.name, this.cocktail)
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async createCollection() {
+            try {
+                let collection = await createCollection(this.collectionName)
+                collections.addCollection(collection)
+                await this.addToCollection(collection)
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 }

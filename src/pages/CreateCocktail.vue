@@ -151,13 +151,8 @@ export default {
       try {
         if (this.formValues.ingredients.length === 0 || this.formValues.instructions.length === 0 || !this.file) {
           this.errorMessages.ingredients = this.formValues.ingredients.length ? 'You must add at least one ingredient' : ''
-
-          if (this.formValues.instructions.length === 0) {
-            this.errorMessages.instructions = 'You must add at least one instruction'
-          }
-          if (!this.file) {
-            this.errorMessages.file = 'You must upload an image'
-          }
+          this.errorMessages.instructions = this.formValues.instructions.length ? 'You must add at least one instruction' : ''
+          this.errorMessages.file = this.file ? '' : 'You must add an image'
           return
         }
         let formData = new FormData();
