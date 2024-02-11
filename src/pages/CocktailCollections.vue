@@ -31,6 +31,9 @@ export default {
   data: () => ({
     collections: collections.collections
   }),
+  mounted() {
+    () => { console.log('hit', this.collections)}
+  },
   methods: {
     async createCollection(e) {
       e.preventDefault()

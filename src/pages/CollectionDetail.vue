@@ -14,7 +14,6 @@ import CocktailCard from '@/components/CocktailCard.vue';
 export default {
   name: 'CollectionDetail',
   data: () => ({
-    collection: []
   }),
   components: {
     CocktailCard

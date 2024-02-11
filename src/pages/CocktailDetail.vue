@@ -21,11 +21,11 @@
                     <div class="popover">
                         <button>Add to collection</button>
                         <div class="collections">
-                            <div class="collection" v-for="collection in collections">
-                                <button @click="addToCollection(collection)" v-if="!collection.inCollection">
+                            <div class="collection" v-for="collection in collections" :key="collection.id">
+                                <button @click="addToCollection(collection)" v-if="!collection.inCollection" :disabled="disableCollections">
                                     <img src="/plus.png" alt="Add" class="rounded-full bg-green-600">
                                 </button>
-                                <button v-else>
+                                <button v-else :disabled="disableCollections">
                                     <img src="/minus.png" alt="Remove" class="rounded-full bg-red-600">
                                 </button>
                                 <p>{{ collection.name }}</p>
@@ -65,7 +65,7 @@
 
 <script>
 import { getCocktailDetails } from '@/services/cocktailServices'
-import { favoriteCocktail, unfavoriteCocktail, addToCollection, createCollection } from '@/services/collectionServices'
+import { favoriteCocktail, unfavoriteCocktail, addToCollection, createCollection, removeFromCollection } from '@/services/collectionServices'
 import { collections } from '@/collections'
 import { authenticated } from '@/authenticated'
 
@@ -75,6 +75,7 @@ export default {
         loading: true,
         cocktail: null,
         disableFavorite: false,
+        disableCollections: false,
         language: '',
         collectionForm: {
             name: ''}
@@ -173,12 +174,24 @@ export default {
             this.disableFavorite = false
         },
         async addToCollection(collection) {
+            this.disableCollections = true
             try {
                 await addToCollection(collection.id, this.cocktail._id)
                 collections.addToCollection(collection.name, this.cocktail)
             } catch (error) {
                 console.log(error)
             }
+            this.disableCollections = false
+        },
+        async removeFromCollection(collection) {
+            this.disableCollections = true
+            try {
+                await removeFromCollection(collection.id, this.cocktail._id)
+                collections.removeFromCollection(collection.name, this.cocktail)
+            } catch (error) {
+                console.log(error)
+            }
+            this.disableCollections = false
         },
         async createCollection() {
             try {

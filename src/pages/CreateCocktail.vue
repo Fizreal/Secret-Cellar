@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h1>Create Cocktail</h1>
+    <h1 class="text-xl text-[rgb(245,215,219)] font-medium tracking-wide">Create Cocktail</h1>
     <form @submit="handleSubmit">
       <fieldset>
         <label for="name">Drink's Name:</label>
@@ -34,31 +34,35 @@
         <table>
           <thead>
             <tr>
-              <th>Measure</th>
-              <th>Ingredient</th>
+              <th class="tableCell">Measure</th>
+              <th class="tableCell">Ingredient</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(ingredient, index) in formValues.ingredients" :key="index">
-              <td>
+            <tr v-for="(ingredient, index) in formValues.ingredients" :key="index" class="text-pretty">
+              <td class="tableCell tableText">
                 {{ingredient.measure}}
               </td>
-              <td>
+              <td class="tableCell tableText">
                 {{ ingredient.name }}
               </td>
               <td>
-                <button type="button" @click="handleRemoveIngredient(index)">Remove</button>
+                <button type="button" @click="handleRemoveIngredient(index)" aria-label="Remove ingredient" class="remove">
+                  <img src="/minus.png" alt="Remove">
+                </button>
               </td>
             </tr>
-            <tr>
-              <td>
+            <tr class="inputRow">
+              <td class="tableCell">
                 <input type="text" name="measure" v-model="newIngredient.measure">
               </td>
-              <td>
+              <td class="tableCell">
                 <input type="text" name="name" v-model="newIngredient.name">
               </td>
               <td>
-                <button type="button" @click="handleAddIngredient">Add</button>
+                <button type="button" @click="handleAddIngredient" aria-label="Add Ingredient" class="add">
+                  <img src="/plus.png" alt="Add">
+                </button>
               </td>
             </tr>
           </tbody>
@@ -70,41 +74,45 @@
         <table>
           <thead>
             <tr>
-              <th>Language</th>
-              <th>Directions</th>
+              <th class="tableCell">Language</th>
+              <th class="tableCell">Directions</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(instruction, index) in formValues.instructions" :key="index">
-              <td>
+              <td class="tableCell tableText">
                 {{instruction.language}}
               </td>
-              <td>
+              <td class="tableCell tableText">
                 {{ instruction.instruction }}
               </td>
               <td>
-                <button type="button" @click="handleRemoveInstruction(index)">Remove</button>
+                <button type="button" @click="handleRemoveInstruction(index)" aria-label="Remove instructions" class="remove">
+                  <img src="/minus.png" alt="Remove">
+                </button>
               </td>
             </tr>
-            <tr>
-              <td>
+            <tr class="inputRow">
+              <td class="tableCell">
                 <select name="" id="" v-model="newInstruction.language">
                   <option value="" disabled selected>Select a language</option>
                   <option :value="language" v-for="(language, index) in availableLanguages" :key="index">{{ language }}</option>
                 </select>
               </td>
-              <td>
+              <td class="tableCell">
                 <input type="text" name="name" v-model="newInstruction.instruction">
               </td>
               <td>
-                <button type="button" @click="handleAddInstruction">Add</button>
+                <button type="button" @click="handleAddInstruction" aria-label="Add instructions" class="add">
+                  <img src="/plus.png" alt="Add">
+                </button>
               </td>
             </tr>
           </tbody>
         </table>
         <p>{{ errorMessages.instructions }}</p>
       </div>
-      <button>Create</button>
+      <button class="submit">Create</button>
     </form>
   </section>
 </template>
@@ -217,3 +225,159 @@ export default {
 }
 
 </script>
+
+<style scoped>
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+  width: clamp(300px, 80%, 600px);
+
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+  background: rgb(255, 255, 255, 0.1);
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+fieldset {
+  width: 100%;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+input:not([type='checkbox']), select {
+  border-radius: 4px;
+  background: #F5D7DB;
+  border: solid 1px #BD83B8;
+  padding: 2px 4px;
+  height: 28px;
+}
+
+label {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  color: #F5D7DB;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  margin-right: 4px;
+}
+
+h2 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  color: #F5D7DB;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: #F5D7DB;
+}
+
+tbody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+}
+tr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.inputRow {
+  height: 30px;
+}
+
+td {
+  display: flex;
+  align-items: center;
+}
+
+table button {
+  aspect-ratio: 1/1;
+  width: 30px;
+  border-radius: 50%;
+  transform: scale(0.8);
+  transition: transform 0.2s ease-in-out;
+}
+
+table button:hover {
+  transform: scale(1);
+}
+
+.add {
+  background: rgb(22 163 74);
+}
+
+.remove {
+  background: rgb(220 38 38);
+}
+
+img {
+  width: 100%;
+}
+
+
+.tableCell {
+  width: 45.77%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tableCell > input, .tableCell > select{
+  width: 100%;
+}
+
+.tableText {
+  color: #BD83B8;
+}
+
+.tableCell > select {
+  width: 100%;
+}
+
+
+.submit {
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  color: #06142E;
+  background: #F5D7DB;
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+.submit:hover {
+  background: #BD83B8;
+}
+
+</style>
