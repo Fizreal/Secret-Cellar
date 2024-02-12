@@ -24,11 +24,21 @@
           <option :value="glass" v-for="(glass, index) in glasses" :key="index">{{ glass }}</option>
         </select>
       </fieldset>
-      <fieldset>
-        <label for="file">Upload image</label>
-        <input type="file" name="file" id="file" accept=".jpg,.jpeg,.png" @change="handleChange" required>
+      <div class="imageUpload">
+        <p class='uploadLabel' v-if="file">Image Preview</p>
+        <p class='uploadLabel' v-else>Select Drink Image</p>
+        <div v-if="file" class="imagePreview">
+          <img :src="imageURL" alt="Image preview">
+          <button @click="handleRemoveImage" aria-label="Remove image">
+            <img src="/x.svg" alt="Remove">
+          </button>
+        </div>
+        <label class="fileUpload" v-else>
+          <input type="file" name="file" id="file" accept="image/jpg,image/jpeg,image/png" @change="handleChange" required>
+          <img src="/upload.png" alt="Upload">Upload Image
+      </label>
         <p>{{ errorMessages.file }}</p>
-      </fieldset>
+      </div>
       <div>
         <h2>Recipe</h2>
         <table>
@@ -112,7 +122,9 @@
         </table>
         <p>{{ errorMessages.instructions }}</p>
       </div>
-      <button class="submit">Create</button>
+      <div>
+        <button class="submit">Create</button>
+      </div>
     </form>
   </section>
 </template>
@@ -139,6 +151,7 @@ export default {
     },
     errorMessages: {instructions: '', ingredients: '', file: ''},
     file: null,
+    imageURL: '',
     newIngredient: {
       measure: '',
       name: '',
@@ -191,8 +204,13 @@ export default {
     },
     handleChange(e) {
       if (e.target.type === 'file') {
-        console.log(e.target.files)
-        this.file = e.target.files[0]
+        let file = e.target.files[0]
+        if (file.size > 10485760) {
+          this.errorMessages.file = 'File size must be less than 10MB'
+          return
+        }
+        this.file = file
+        this.imageURL = URL.createObjectURL(file)
       } else {
         this.formValues = { ...this.formValues, [e.target.name]: e.target.value }
       }
@@ -220,6 +238,10 @@ export default {
     },
     handleRemoveInstruction(index) {
       this.formValues.instructions.splice(index, 1)
+    },
+    handleRemoveImage() {
+      this.file = null
+      this.imageURL = ''
     }
   }
 }
@@ -239,19 +261,15 @@ section {
 
 form {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
   width: 100%;
   gap: 8px;
   background: rgb(255, 255, 255, 0.1);
   margin-top: 16px;
-  padding: 16px;
-  border-radius: 4px;
+  padding: 24px;
+  border-radius: 8px;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
-
-fieldset {
-  width: 100%;
 }
 
 div {
@@ -259,7 +277,6 @@ div {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-bottom: 8px;
 }
 
 input:not([type='checkbox']), select {
@@ -270,7 +287,61 @@ input:not([type='checkbox']), select {
   height: 28px;
 }
 
-label {
+input[type="file"] {
+    display: none;
+}
+
+.fileUpload {
+    border: 1px solid #06142E;
+    border-radius: 8px;
+    display: flex;
+    background: #F5D7DB;
+    color: #06142E;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.fileUpload img {
+  aspect-ratio: 1/1;
+  width: 30px;
+  margin-right: 8px;
+}
+
+.imageUpload, fieldset {
+  margin: 8px 0;
+}
+
+.imageUpload > p {
+  margin: 0 0 8px 0;
+}
+
+.imagePreview {
+  position: relative;
+  width: clamp(100px, 80%, 342px);
+  aspect-ratio: 1/1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.imagePreview > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.imagePreview > button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.imagePreview > button img {
+  aspect-ratio: 1/1;
+  width: 16px;
+  mix-blend-mode: difference;
+}
+
+label, .uploadLabel {
   font-size: 1.125rem;
   line-height: 1.75rem;
   color: #F5D7DB;
@@ -290,12 +361,13 @@ h2 {
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 8px;
 }
 
 th {
   font-size: 1rem;
   line-height: 1.5rem;
-  color: #F5D7DB;
+  color: #BD83B8;
 }
 
 tbody {
