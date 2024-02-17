@@ -12,17 +12,13 @@ export const collections = reactive({
     delete this.collections[collection.name]
   },
   addToCollection(collection, cocktail) {
-    if (this.collections[collection].drinks.length === 0) {
-      this.collections[collection].drinks = [cocktail]
-    } else {
-      this.collections[collection].drinks.push(cocktail)
-    }
+    this.collections[collection].drinks = [cocktail]
   },
   removeFromCollection(collection, cocktail) {
     let idx = this.collections[collection].drinks
       .map((cocktail) => cocktail._id)
       .indexOf(cocktail._id)
     if (idx === -1) return
-    this.collections[collection].splice(idx, 1)
+    this.collections[collection].drinks.splice(idx, 1)
   }
 })

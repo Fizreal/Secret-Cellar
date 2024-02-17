@@ -21,7 +21,7 @@ export const getCollections = async () => {
 }
 
 export const createCollection = async (data) => {
-  const response = await Client.post(`/collection/create`, data)
+  const response = await Client.post(`/collection`, data)
   return response.data
 }
 
