@@ -6,9 +6,9 @@
         <option v-for="ingredient in ingredients" :key="ingredient" :value="ingredient">{{ ingredient }}</option>
       </select>
     </form>
-    <section id="results" v-if="searchResults" class="flex flex-wrap justify-center">
+    <div id="results" v-if="searchResults" class="flex flex-wrap justify-center gap-4">
         <CocktailCard v-for="drink in searchResults" :key="drink.idDrink" :name="drink.strDrink" :category="drink.strCategory" :image_url="drink.strDrinkThumb" @click="selectDrink(drink.idDrink)"/>
-    </section>
+    </div>
   </section>
 </template>
 

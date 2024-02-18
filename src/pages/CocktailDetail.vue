@@ -114,9 +114,9 @@ export default {
                 if(collectionNames[i] === 'favorites') continue
                 let collection = collections.collections[collectionNames[i]]
                 if (collection.drinks.findIndex(drink => drink._id === this.cocktail._id) === -1) {
-                    availableCollections.push({name: collectionNames[i], collection: collection, id: collection.id, inCollection: false})
+                    availableCollections.push({name: collectionNames[i], id: collection.id, inCollection: false})
                 } else {
-                    availableCollections.push({name: collectionNames[i], collection: collection, id: collection.id, inCollection: true})
+                    availableCollections.push({name: collectionNames[i], id: collection.id, inCollection: true})
                 }
             }
             availableCollections.sort((a, b) => a.inCollection - b.inCollection)

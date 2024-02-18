@@ -417,7 +417,6 @@ img {
   width: 100%;
 }
 
-
 .tableCell {
   width: 45.77%;
   display: flex;
@@ -436,7 +435,6 @@ img {
 .tableCell > select {
   width: 100%;
 }
-
 
 .submit {
   font-size: 1.125rem;
