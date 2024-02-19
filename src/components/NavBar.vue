@@ -16,7 +16,7 @@
         <div class="dropdown">
           <button class="dropdownButton">Community</button>
           <div class="content">
-            <router-link to="/">Search</router-link>
+            <router-link to="/community">Search</router-link>
             <router-link to="/community/new">Create Drink</router-link>
           </div>
         </div>

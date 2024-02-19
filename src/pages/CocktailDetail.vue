@@ -1,11 +1,7 @@
 <template>
     <section id="Drink Details" v-if="!cocktail">
-        <div v-if="loading">
-            <h1>Loading...</h1>
-        </div>
-        <div v-else>
-            <h1>Not Found</h1>
-        </div>
+        <h1 v-if="loading">Loading...</h1>
+        <h1 v-else>No community creations available</h1>
     </section>
     <section id="Drink Details" v-else>
         <div class="w-full md:grid md:grid-cols-2">
@@ -35,7 +31,7 @@
                                     <button>
                                         <img src="/plus.png" alt="Add" class="w-6 h-6 rounded-full bg-green-600">
                                     </button>
-                                    <input type="text" placeholder="New collection" :value="this.collectionForm.name" @change="handleChange">
+                                    <input type="text" placeholder="New collection" :value="this.newCollection" @change="handleChange">
                                 </form>
                             </div>
                         </div>
@@ -80,7 +76,7 @@ export default {
         disableFavorite: false,
         disableCollections: false,
         language: '',
-        collectionForm: { name: '' }
+        newCollection: ''
     }),
     mounted() {
         this.getCocktail()
@@ -196,14 +192,14 @@ export default {
             this.disableCollections = false
         },
         handleChange(e) {
-            this.collectionForm.name = e.target.value
+            this.newCollection = e.target.value
         },
         async createCollection(e) {
             e.preventDefault()
 
             try {
-                let collection = await createCollection({name: this.collectionForm.name})
-                this.collectionForm.name = ''
+                let collection = await createCollection({name: this.newCollection})
+                this.newCollection = ''
                 collections.addCollection(collection)
             } catch (error) {
                 console.log(error)

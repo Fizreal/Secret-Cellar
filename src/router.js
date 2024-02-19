@@ -9,6 +9,7 @@ import CocktailDetail from './pages/CocktailDetail'
 import CocktailCollections from './pages/CocktailCollections'
 import CollectionDetail from './pages/CollectionDetail'
 import CreateCocktail from './pages/CreateCocktail'
+import CommunityCreations from './pages/CommunityCreations'
 
 const routes = [
   { path: '/', component: HomePage, name: 'Homepage' },
@@ -51,6 +52,11 @@ const routes = [
     path: '/profile/collections/:collectionName',
     component: CollectionDetail,
     name: 'CollectionDetail'
+  },
+  {
+    path: '/community',
+    component: CommunityCreations,
+    name: 'CommunityCreations'
   },
   {
     path: '/community/new',

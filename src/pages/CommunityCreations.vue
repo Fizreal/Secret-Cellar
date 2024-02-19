@@ -1,16 +1,12 @@
 <template>
   <section v-if="!communityCreations">
-        <div v-if="loading">
-            <h1>Loading...</h1>
-        </div>
-        <div v-else>
-            <h1>No community creations available</h1>
-        </div>
+    <h1 v-if="loading">Loading...</h1>
+    <h1 v-else>No community creations available</h1>
     </section>
   <section v-else>
     <h1>Community Creations</h1>
     <div class="results">
-      <CocktailCard v-for="drink in communityCreations" :key="drink.idDrink" :name="drink.strDrink" :category="drink.strCategory" :image_url="drink.strDrinkThumb" :author="drink.author" @click="selectDrink(drink.idDrink)"/>
+      <CocktailCard v-for="drink in communityCreations" :key="drink.idDrink" :name="drink.name" :category="drink.category" :image_url="drink.image_url" :author="drink.author" @click="selectDrink(drink.idDrink)"/>
     </div>
   </section>
 </template>
@@ -20,7 +16,7 @@ import { communityCreations } from '@/services/cocktailServices';
 import CocktailCard from '@/components/CocktailCard.vue';
 
 export default {
-  name: 'CollectionDetail',
+  name: 'CommunityCreations',
   data: () => ({
     communityCreations: null,
     loading: true
@@ -52,7 +48,8 @@ export default {
 
 section {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
     width: 80%;
     margin: 16px 0px;
     gap: 16px;
