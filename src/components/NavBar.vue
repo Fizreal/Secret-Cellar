@@ -2,7 +2,7 @@
     <header>
       <nav :class="(expandNav) ? 'expanded' : ''">
         <router-link to="/" class="home">
-          <img src="" alt="logo">
+          <img src="/logo.png" alt="Logo" class="logo">
           <h1>Site name</h1>
         </router-link>
         <div class="dropdown">
@@ -84,6 +84,13 @@ nav a {
   display: block;
   text-align: center;
 }
+
+.logo {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
 
 .expand {
   display: none;

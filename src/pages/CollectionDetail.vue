@@ -23,7 +23,7 @@
 
 <script>
 import { collections } from '@/collections';
-import {  deleteCollection } from '@/services/collectionServices';
+import { deleteCollection } from '@/services/collectionServices';
 import CocktailCard from '@/components/CocktailCard.vue';
 
 export default {
