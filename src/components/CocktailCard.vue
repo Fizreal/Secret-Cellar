@@ -43,4 +43,21 @@ img {
   background: #473E66;
 }
 
+h3 {
+  font-size: 20px;
+  line-height: 28px;
+  color: #F5D7DB;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+p {
+  font-size: 16px;
+  line-height: 24px;
+  color: white;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+
+}
+
 </style>

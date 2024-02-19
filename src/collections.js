@@ -9,7 +9,7 @@ export const collections = reactive({
     }
   },
   removeCollection(collection) {
-    delete this.collections[collection.name]
+    delete this.collections[collection]
   },
   addToCollection(collection, cocktail) {
     this.collections[collection].drinks = [cocktail]

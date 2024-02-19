@@ -119,7 +119,7 @@ nav a {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   min-width: 150px;
   height: 0;
-  z-index: 1;
+  z-index: 2;
   transition: all 0.3s ease-in-out;
 }
 

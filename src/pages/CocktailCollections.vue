@@ -1,5 +1,9 @@
 <template>
   <section>
+    <button @click="toggleCreateModal" aria-label="Create collection" class="modalButton">
+      <img src="/plus.png" alt="Plus">
+      <p>New Collection</p>
+    </button>
     <h1>Collections</h1>
     <div class="collections">
       <router-link :to="'/profile/collections/' + collection.name" v-for="collection in collections" :key="collection.id">
@@ -20,7 +24,7 @@
         <h2>Create New Collection</h2>
         <fieldset>
           <label for="name">Name:</label>
-          <input type="text" name="name" id="name">
+          <input type="text" name="name" id="name" :value="newCollection" @change="handleChange" maxlength="20">
         </fieldset>
         <button type="submit" class="submit">Create</button>
       </form>
@@ -35,16 +39,13 @@ import { createCollection } from '@/services/collectionServices';
 export default {
   name: 'CocktailCollections',
   data: () => ({
-    showCreateModal: true,
-    createForm: {
-      name: ''
-    },
+    showCreateModal: false,
+    newCollection: '',
   }),
   computed: {
     collections() {
       let availableCollections = []
       let collectionNames = Object.keys(collections.collections)
-      console.log(collectionNames)
         for (let i = 0; i < collectionNames.length; i++) {
           let collection = collections.collections[collectionNames[i]]
           availableCollections.push({name: collectionNames[i], drinks: collection.drinks, id: collection.id})
@@ -57,15 +58,18 @@ export default {
       this.showCreateModal = !this.showCreateModal
     },
     handleChange(e) {
-      this.form.name = e.target.value
+      this.newCollection = e.target.value
     },
     async createCollection(e) {
       e.preventDefault()
-        let data = {
-          name: e.target.name.value,
-        }
-        let collection = await createCollection(data)
-        collections.addCollection(collection)
+      if (this.newCollection === '') return
+      let data = {
+        name: this.newCollection,  
+      }  
+      let collection = await createCollection(data)
+      collections.addCollection(collection)
+      this.toggleCreateModal()
+      this.newCollection = ''
     },
     collectionText(length) {
       switch (length) {
@@ -75,21 +79,48 @@ export default {
           return '1 drink in collection'
         default:
           return `${length} drinks in collection`
+      }
     }
   }
-}
 }
 </script>
 
 <style scoped>
 
 section {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 80%;
   margin: 16px 0px;
-  gap: 16px;
+  gap: 32px;
+}
+
+h1 {
+  font-size: 20px;
+  line-height: 28px;
+  color: rgb(245,215,219);
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+h2 {
+  font-size: 18px;
+  line-height: 24px;
+  color: #BD83B8;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  text-align: center;
+}
+
+p {
+  font-size: 16px;
+  line-height: 24px;
+  color: white;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  text-align: center;
 }
 
 .collections {
@@ -128,7 +159,7 @@ section {
   padding: 24px;
   border-radius: 8px;
   gap: 16px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   z-index: 1;
 }
@@ -172,13 +203,18 @@ a {
   border: 1px solid #F5D7DB;
   border-radius: 10px;
   overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 .collectionDetails {
   display: flex;
   flex-grow: 1;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  height: 100%;
+  gap: 10px;
+  background: rgb(255,255,255,0.1);
 }
 
 .collectionPreview {
@@ -200,6 +236,46 @@ a {
   width: 50%;
   height: 50%;
   aspect-ratio: 1 / 1;
+}
+
+.modalButton {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 0;
+  right: 0;
+  padding: 8px 16px;
+  gap: 8px;
+  border-radius: 8px;
+  background: #BD83B8;
+  z-index: 1;
+}
+
+.modalButton:hover {
+  background: #F5D7DB;
+}
+
+.modalButton:hover p {
+  color: #BD83B8;
+}
+
+.modalButton img {
+  width: 24px;
+  height: 24px;
+}
+
+.modalButton p {
+  display: none;
+  color: #F5D7DB;
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+@media screen and (min-width: 768px){
+  .modalButton p {
+    display: block;
+  }
 }
 
 </style>

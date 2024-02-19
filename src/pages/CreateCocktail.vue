@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h1 class="text-xl text-[rgb(245,215,219)] font-medium tracking-wide">Create Cocktail</h1>
+    <h1>Create Cocktail</h1>
     <form @submit="handleSubmit">
       <fieldset>
         <label for="name">Drink's Name:</label>
@@ -257,6 +257,14 @@ section {
   margin-top: 16px;
   width: clamp(300px, 80%, 600px);
 
+}
+
+h1 {
+  font-size: 20px;
+  line-height: 28px;
+  color: rgb(245,215,219);
+  font-weight: 500;
+  letter-spacing: 0.025em;
 }
 
 form {

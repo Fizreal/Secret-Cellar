@@ -16,7 +16,7 @@
                         <button :aria-label="(this.favorite) ? 'Unfavorite' : 'Favorite'" @click="toggleFavorite" :disabled="disableFavorite">
                             <img :src="(this.favorite) ? '/liked.png' : '/like.png'" :alt="(this.favorite) ? 'Unfavorite' : 'Favorite'">
                         </button>
-                        <p>{{this.cocktail.likes}}</p>
+                        <p class="likeText">{{this.cocktail.likes}}</p>
                     </div>
                     <div class="popover">
                         <button class="popoverButton">Add to collection</button>
@@ -223,10 +223,36 @@ section {
     gap: 16px;
 }
 
+h1 {
+    font-size: 20px;
+    line-height: 28px;
+    color: #F5D7DB;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+}
+
+h2, .likeText {
+    font-size: 18px;
+    line-height: 24px;
+    color: #BD83B8;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+}
+
+p:not(.likeText), li {
+    font-size: 16px;
+    line-height: 24px;
+    color: white;
+    font-weight: 400;
+    letter-spacing: 0.025em;
+}
+
 .drink {
     width: clamp(150px, 100%, 400px);
     aspect-ratio: 1/1;
     justify-self: center;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    border-radius: 10px;
 }
 
 .likes {
@@ -275,6 +301,11 @@ input {
     margin: 0;
     background-color: inherit;
     padding: 7px 8px;
+    font-size: 18px;
+    line-height: 24px;
+    color: #BD83B8;
+    font-weight: 500;
+    letter-spacing: 0.025em;
 }
 
 .collections {
