@@ -24,7 +24,10 @@ export const RegisterUser = async (data) => {
 export const CheckSession = async () => {
   try {
     const res = await Client.get('/auth/session')
-    return res.data
+    if (res.status === 200) {
+      return res.data
+    }
+    return null
   } catch (error) {
     console.log(error)
     throw error

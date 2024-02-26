@@ -11,7 +11,7 @@
       </fieldset>
       <fieldset>
         <label for="alcoholic">Alcoholic:</label>
-        <input type="checkbox" name="alcoholic" id="alcoholic" :value="this.formValues.alcoholic" @input="handleChange" required>
+        <input type="checkbox" name="alcoholic" id="alcoholic" @input="handleChange">
       </fieldset>
       <fieldset>
         <label for="category">Category:</label>
@@ -37,7 +37,7 @@
           </button>
         </div>
         <label class="fileUpload" v-else>
-          <input type="file" name="file" id="file" accept="image/jpg,image/jpeg,image/png" @change="handleChange" required>
+          <input type="file" name="file" id="file" accept="image/jpg,image/jpeg,image/png" @change="handleChange">
           <img src="/upload.png" alt="Upload">Upload Image
       </label>
         <p>{{ errorMessages.file }}</p>
@@ -97,7 +97,7 @@
                 {{instruction.language}}
               </td>
               <td class="tableCell tableText">
-                {{ instruction.instruction }}
+                {{ instruction.steps }}
               </td>
               <td>
                 <button type="button" @click="handleRemoveInstruction(index)" aria-label="Remove instructions" class="remove">
@@ -113,7 +113,7 @@
                 </select>
               </td>
               <td class="tableCell">
-                <input type="text" name="name" v-model="newInstruction.instruction">
+                <input type="text" name="name" v-model="newInstruction.steps">
               </td>
               <td>
                 <button type="button" @click="handleAddInstruction" aria-label="Add instructions" class="add">
@@ -139,7 +139,7 @@ import UnauthenticatedUser from '@/components/UnauthenticatedUser.vue';
 
 const languages = ['en', 'fr', 'de', 'it', 'es']
 const categories = ['Ordinary Drink', 'Cocktail', 'Shot', 'Punch/Party Drink', 'Other']
-const glasses = ['Highball glass', 'Cocktail glass', 'Old-fashioned glass', 'Champagne flute', 'Whiskey sour glass',  'Coffee mug', 'Shot glass', 'Punch bowl', 'Pitcher', 'Pint glass', 'Copper Mug', 'Wine Glass', 'Mason jar', 'Margarita glass', 'Martini Glass']
+const glasses = ['Highball glass', 'Cocktail glass', 'Old-fashioned glass', 'Collins glass', 'Champagne flute', 'Whiskey sour glass',  'Coffee mug', 'Shot glass', 'Punch bowl', 'Pitcher', 'Pint glass', 'Copper Mug', 'Wine Glass', 'Mason jar', 'Margarita glass', 'Martini Glass']
 
 export default {
   name: 'CreateCocktail',
@@ -163,7 +163,7 @@ export default {
     },
     newInstruction: {
       language: '',
-      instruction: '',
+      steps: '',
     }
   }),
   components: {
@@ -181,9 +181,10 @@ export default {
     async handleSubmit(e) {
       e.preventDefault()
       try {
+        console.log(this.formValues)
         if (this.formValues.ingredients.length === 0 || this.formValues.instructions.length === 0 || !this.file) {
-          this.errorMessages.ingredients = this.formValues.ingredients.length ? 'You must add at least one ingredient' : ''
-          this.errorMessages.instructions = this.formValues.instructions.length ? 'You must add at least one instruction' : ''
+          this.errorMessages.ingredients = this.formValues.ingredients.length ? '' : 'You must add at least one ingredient'
+          this.errorMessages.instructions = this.formValues.instructions.length ? '' : 'You must add at least one instruction'
           this.errorMessages.file = this.file ? '' : 'You must add an image'
           return
         }
@@ -196,7 +197,6 @@ export default {
           }
         })
         formData.append('file', this.file)
-        console.log(this.formValues, formData)
         let cocktail = await createCocktail(formData)
         this.formValues = {
           name: '',
@@ -222,6 +222,8 @@ export default {
         }
         this.file = file
         this.imageURL = URL.createObjectURL(file)
+      } else if (e.target.name === 'alcoholic') {
+        this.formValues = { ...this.formValues, [e.target.name]: e.target.checked }
       } else {
         this.formValues = { ...this.formValues, [e.target.name]: e.target.value }
       }
@@ -239,11 +241,11 @@ export default {
       this.formValues.ingredients.splice(index, 1)
     },
     handleAddInstruction() {
-      if (this.newInstruction.language.trim() !== '' && this.newInstruction.instruction.trim() !== '') {
+      if (this.newInstruction.language.trim() !== '' && this.newInstruction.steps.trim() !== '') {
         this.formValues.instructions.push(this.newInstruction)
         this.newInstruction = {
           language: '',
-          instruction: '',
+          steps: '',
         }
       }
     },
@@ -265,7 +267,7 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 16px;
+  margin: 16px 0px;
   width: clamp(300px, 80%, 600px);
 
 }

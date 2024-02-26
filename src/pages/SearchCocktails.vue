@@ -22,11 +22,17 @@ export default {
         searchResults: [],
         searchQuery: ""
     }),
+    mounted() {
+      this.getSearchResults('')
+    },
     methods: {
+      async getSearchResults(query) {
+        let res = await nameSearch(query)
+        this.searchResults = res
+      },
       async searchCocktails(e) {
         e.preventDefault()
-        let res = await nameSearch(this.searchQuery)
-        this.searchResults = res
+        await this.getSearchResults(this.searchQuery)
         this.searchQuery = ""
       },
       handleChange(e) {

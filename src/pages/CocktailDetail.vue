@@ -1,7 +1,7 @@
 <template>
     <section id="Drink Details" v-if="!cocktail">
         <h1 v-if="loading">Loading...</h1>
-        <h1 v-else>No community creations available</h1>
+        <h1 v-else>Drink not found</h1>
     </section>
     <section id="Drink Details" v-else>
         <div class="w-full md:grid md:grid-cols-2">

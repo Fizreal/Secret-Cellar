@@ -21,40 +21,43 @@ export default {
 
 <style scoped>
 
-.carouselCard{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 250px;
-  gap: 8px;
-}
+  .carouselCard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
+    gap: 8px;
+  }
 
-img {
-  aspect-ratio: 1/1;
-  width: 100%;
-  transform: scale(0.7);
-  transition: all 0.3s ease-in-out;
-  border-radius: 50%;
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
+  img {
+    aspect-ratio: 1/1;
+    width: 100%;
+    transform: scale(0.7);
+    transition: all 0.3s ease-in-out;
+    border-radius: 50%;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
 
-h3 {
-  visibility: hidden;
-  font-size: 20px;
-  line-height: 28px;
-  color: #F5D7DB;
-  font-weight: 500;
-  letter-spacing: 0.025em;
-}
-.carouselCard:hover > img {
-  transform: scale(1);
-  border-radius: 25px;
-}
+  h3 {
+    visibility: hidden;
+    width: 100%;
+    font-size: 20px;
+    line-height: 28px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #F5D7DB;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+  }
+  .carouselCard:hover > img {
+    transform: scale(1);
+    border-radius: 25px;
+  }
 
-.carouselCard:hover > h3 {
-  visibility: visible;
-}
-
-
+  .carouselCard:hover > h3 {
+    visibility: visible;
+  }
 
 </style>
