@@ -47,52 +47,52 @@ export default {
 
 <style scoped>
 
-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
-  gap: 16px;
-  padding: 16px 0px;
-}
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    gap: 16px;
+    margin: 16px 0px;
+  }
 
-.search {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
+  .search {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
 
-.search > input {
-  width: 224px;
-  padding: 2px 8px;
-  border: 1px solid #BD83B8;
-  border-radius: 4px;
-  background: #F5D7DB;
-}
+  .search > input {
+    width: 224px;
+    padding: 2px 8px;
+    border: 1px solid #BD83B8;
+    border-radius: 4px;
+    background: #F5D7DB;
+  }
 
-.search > button {
-  background: #BD83B8;
-  color: #F5D7DB;
-  width: 128px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 20px;
-  line-height: 28px;
-  font-weight: 500;
-  letter-spacing: 0.025em
-}
+  .search > button {
+    background: #BD83B8;
+    color: #F5D7DB;
+    width: 128px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 500;
+    letter-spacing: 0.025em
+  }
 
-.search > button:hover {
-  background: #F5D7DB;
-  color: #BD83B8;
-}
+  .search > button:hover {
+    background: #F5D7DB;
+    color: #BD83B8;
+  }
 
-.results {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
-}
+  .results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
 
 </style>

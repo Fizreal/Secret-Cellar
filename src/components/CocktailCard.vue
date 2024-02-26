@@ -2,9 +2,9 @@
   <div :id="name" class="drinkCard">
     <img :src="image_url" :alt="name">
     <div>
-      <h3 class="col-span-2 text-center text-xl">{{ name }}</h3>
-      <p class="text-center" v-if="category">Type: {{ category }}</p>
-      <p class="text-center" v-if="author">By: {{ author }}</p>
+      <h3>{{ name }}</h3>
+      <p v-if="category">Type: {{ category }}</p>
+      <p v-if="author">By: {{ author }}</p>
     </div>
   </div>
 </template>
@@ -44,6 +44,8 @@ img {
 }
 
 h3 {
+  text-align: center;
+  grid-column: span 2 / span 2;
   font-size: 20px;
   line-height: 28px;
   color: #F5D7DB;
@@ -52,6 +54,7 @@ h3 {
 }
 
 p {
+  text-align: center;
   font-size: 16px;
   line-height: 24px;
   color: white;

@@ -46,28 +46,28 @@ export default {
 
 <style scoped>
 
-section {
+  section {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 80%;
     margin: 16px 0px;
     gap: 16px;
-}
+  }
 
-h1 {
+  h1 {
     font-size: 20px;
     line-height: 28px;
     color: #F5D7DB;
     font-weight: 500;
     letter-spacing: 0.025em;
-}
-.results {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
-}
+  }
+  .results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
 
 </style>
 

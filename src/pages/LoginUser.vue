@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-[#F1916D]/80 mt-12 p-12 rounded-2xl">
+  <section class="bg-[#F1916D]/80">
     <h1 class="font-semibold text-xl">Welcome Back!</h1>
     <form @submit="handleSubmit">
       <fieldset>
@@ -66,48 +66,52 @@ export default {
 
 <style scoped>
 
-section {
-  width: clamp(200px, 80%, 400px);
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
+  section {
+    width: clamp(200px, 80%, 400px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    margin: 48px 0px;
+    padding: 48px;
+    border-radius: 16px;
+  }
 
-fieldset {
-  display: flex;
-  flex-direction: column;
-  margin: 30px 0;
-}
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    margin: 30px 0;
+  }
 
-input {
-  padding: 8px 12px;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-}
+  input {
+    padding: 8px 12px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  }
 
-.showPassword {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  right: 8px;
-  bottom: 7px;
-  padding: 0 4px 2px 4px;
-}
+  .showPassword {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    right: 8px;
+    bottom: 7px;
+    padding: 0 4px 2px 4px;
+  }
 
-.showPassword:focus {
-  border: 1px solid black;
-}
+  .showPassword:focus {
+    border: 1px solid black;
+  }
 
-.submit {
-  width: 100%;
-  text-align: center;
-  padding: 8px 12px;
-  border-radius: 6px;
-  background-color: blue;
-  border: 2px solid blue;
-}
+  .submit {
+    width: 100%;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background-color: blue;
+    border: 2px solid blue;
+  }
 
-submit:focus {
-  border: 2px solid white;
-}
+  submit:focus {
+    border: 2px solid white;
+  }
+
 </style>

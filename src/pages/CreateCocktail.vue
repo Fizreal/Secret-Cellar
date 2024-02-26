@@ -52,7 +52,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(ingredient, index) in formValues.ingredients" :key="index" class="text-pretty">
+            <tr v-for="(ingredient, index) in formValues.ingredients" :key="index">
               <td class="tableCell tableText">
                 {{ingredient.measure}}
               </td>
@@ -263,56 +263,55 @@ export default {
 
 <style scoped>
 
-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 16px 0px;
-  width: clamp(300px, 80%, 600px);
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 16px 0px;
+    width: clamp(300px, 80%, 600px);
+    gap: 16px;
+  }
 
-}
+  h1 {
+    font-size: 20px;
+    line-height: 28px;
+    color: rgb(245,215,219);
+    font-weight: 500;
+    letter-spacing: 0.025em;
+  }
 
-h1 {
-  font-size: 20px;
-  line-height: 28px;
-  color: rgb(245,215,219);
-  font-weight: 500;
-  letter-spacing: 0.025em;
-}
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+    background: rgb(255, 255, 255, 0.1);
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
 
-form {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 100%;
-  gap: 8px;
-  background: rgb(255, 255, 255, 0.1);
-  margin-top: 16px;
-  padding: 24px;
-  border-radius: 8px;
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
 
-div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
+  input:not([type='checkbox']), select {
+    border-radius: 4px;
+    background: #F5D7DB;
+    border: solid 1px #BD83B8;
+    padding: 2px 4px;
+    height: 28px;
+  }
 
-input:not([type='checkbox']), select {
-  border-radius: 4px;
-  background: #F5D7DB;
-  border: solid 1px #BD83B8;
-  padding: 2px 4px;
-  height: 28px;
-}
+  input[type="file"] {
+      display: none;
+  }
 
-input[type="file"] {
-    display: none;
-}
-
-.fileUpload {
+  .fileUpload {
     border: 1px solid #06142E;
     border-radius: 8px;
     display: flex;
@@ -320,155 +319,155 @@ input[type="file"] {
     color: #06142E;
     padding: 6px 12px;
     cursor: pointer;
-}
+  }
 
-.fileUpload img {
-  aspect-ratio: 1/1;
-  width: 30px;
-  margin-right: 8px;
-}
+  .fileUpload img {
+    aspect-ratio: 1/1;
+    width: 30px;
+    margin-right: 8px;
+  }
 
-.imageUpload, fieldset {
-  margin: 8px 0;
-}
+  .imageUpload, fieldset {
+    margin: 8px 0;
+  }
 
-.imageUpload > p {
-  margin: 0 0 8px 0;
-}
+  .imageUpload > p {
+    margin: 0 0 8px 0;
+  }
 
-.imagePreview {
-  position: relative;
-  width: clamp(100px, 80%, 342px);
-  aspect-ratio: 1/1;
-  border-radius: 8px;
-  overflow: hidden;
-}
-.imagePreview > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
+  .imagePreview {
+    position: relative;
+    width: clamp(100px, 80%, 342px);
+    aspect-ratio: 1/1;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .imagePreview > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 
-.imagePreview > button {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-}
+  .imagePreview > button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
 
-.imagePreview > button img {
-  aspect-ratio: 1/1;
-  width: 16px;
-  mix-blend-mode: difference;
-}
+  .imagePreview > button img {
+    aspect-ratio: 1/1;
+    width: 16px;
+    mix-blend-mode: difference;
+  }
 
-label, .uploadLabel {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-  color: #F5D7DB;
-  font-weight: 500;
-  letter-spacing: 0.025em;
-  margin-right: 4px;
-}
+  label, .uploadLabel {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    color: #F5D7DB;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    margin-right: 4px;
+  }
 
-h2 {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-  color: #F5D7DB;
-  font-weight: 500;
-  letter-spacing: 0.025em;
-}
+  h2 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    color: #F5D7DB;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+  }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 8px;
-}
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 8px;
+  }
 
-th {
-  font-size: 1rem;
-  line-height: 1.5rem;
-  color: #BD83B8;
-}
+  th {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: #BD83B8;
+  }
 
-tbody {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  tbody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
 
-}
-tr {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-}
+  }
+  tr {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
 
-.inputRow {
-  height: 30px;
-}
+  .inputRow {
+    height: 30px;
+  }
 
-td {
-  display: flex;
-  align-items: center;
-}
+  td {
+    display: flex;
+    align-items: center;
+  }
 
-table button {
-  aspect-ratio: 1/1;
-  width: 30px;
-  border-radius: 50%;
-  transform: scale(0.8);
-  transition: transform 0.2s ease-in-out;
-}
+  table button {
+    aspect-ratio: 1/1;
+    width: 30px;
+    border-radius: 50%;
+    transform: scale(0.8);
+    transition: transform 0.2s ease-in-out;
+  }
 
-table button:hover {
-  transform: scale(1);
-}
+  table button:hover {
+    transform: scale(1);
+  }
 
-.add {
-  background: rgb(22 163 74);
-}
+  .add {
+    background: rgb(22 163 74);
+  }
 
-.remove {
-  background: rgb(220 38 38);
-}
+  .remove {
+    background: rgb(220 38 38);
+  }
 
-img {
-  width: 100%;
-}
+  img {
+    width: 100%;
+  }
 
-.tableCell {
-  width: 45.77%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .tableCell {
+    width: 45.77%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.tableCell > input, .tableCell > select{
-  width: 100%;
-}
+  .tableCell > input, .tableCell > select{
+    width: 100%;
+  }
 
-.tableText {
-  color: #BD83B8;
-}
+  .tableText {
+    color: #BD83B8;
+  }
 
-.tableCell > select {
-  width: 100%;
-}
+  .tableCell > select {
+    width: 100%;
+  }
 
-.submit {
-  font-size: 1.125rem;
-  font-weight: 500;
-  letter-spacing: 0.025em;
-  color: #06142E;
-  background: #F5D7DB;
-  border-radius: 8px;
-  padding: 4px 8px;
-}
+  .submit {
+    font-size: 1.125rem;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    color: #06142E;
+    background: #F5D7DB;
+    border-radius: 8px;
+    padding: 4px 8px;
+  }
 
-.submit:hover {
-  background: #BD83B8;
-}
+  .submit:hover {
+    background: #BD83B8;
+  }
 
 </style>

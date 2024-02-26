@@ -1,9 +1,9 @@
 <template>
-  <section id="searchAlphabetically" class="flex flex-col items-center w-4/5">
-    <div id="alphabetFilter" class="flex flex-wrap justify-center my-4">
+  <section>
+    <div id="alphabetFilter">
       <form class="md:hidden">
-        <label for="letterSelect" class="mr-2 text-xl text-[#F5D7DB] font-medium tracking-wide">Filter:</label>
-        <select id="letterSelect" v-model="currentLetter" @change="handleChange" class="rounded px-1 py-0.5 border border-[#BD83B8] bg-[#F5D7DB]">
+        <label for="letterSelect">Filter:</label>
+        <select id="letterSelect" v-model="currentLetter" @change="handleChange">
           <option v-for="letter in letters" :key="letter" :value="letter">{{ letter }}</option>
         </select>
       </form>
@@ -12,7 +12,7 @@
         <span v-if="letter !== 'Z'" class="text-gray-400">/</span>
       </div>
     </div>
-    <div id="Results" class="flex flex-wrap justify-center gap-4">
+    <div class="results">
       <CocktailCard v-for="drink in searchResults" :key="drink.idDrink" :name="drink.strDrink" :category="drink.strCategory" :image_url="drink.strDrinkThumb" @click="selectDrink(drink.idDrink)"/>
     </div>
   </section>
@@ -58,3 +58,47 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    gap: 16px;
+    margin: 16px 0px;
+  }
+
+  #alphabetFilter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 16px 0px;
+  }
+
+  label {
+    font-size: 20px;
+    line-height: 28px;
+    color: #F5D7DB;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    margin-right: 8px;
+  }
+
+  select {
+    border-radius: 4px;
+    background: #F5D7DB;
+    border: solid 1px #BD83B8;
+    padding: 2px 4px;
+    height: 28px;
+  }
+
+  .results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+
+</style>

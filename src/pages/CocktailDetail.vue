@@ -7,7 +7,7 @@
         <div class="w-full md:grid md:grid-cols-2">
             <div>
                 <img :src="cocktail.image_url" :alt="cocktail.name" class="drink">
-                <div class="flex w-full max-w-[400px] justify-around">
+                <div class="flex w-full max-w-[400px] justify-around" v-if="user">
                     <div class="likes">
                         <button :aria-label="(this.favorite) ? 'Unfavorite' : 'Favorite'" @click="toggleFavorite" :disabled="disableFavorite">
                             <img :src="(this.favorite) ? '/liked.png' : '/like.png'" :alt="(this.favorite) ? 'Unfavorite' : 'Favorite'">
@@ -19,23 +19,32 @@
                         <div class="collections">
                             <div class="collection" v-for="collection in collections" :key="collection.id">
                                 <button @click="addToCollection(collection)" v-if="!collection.inCollection" :disabled="disableCollections">
-                                    <img src="/plus.png" alt="Add" class="w-6 h-6 rounded-full bg-green-600">
+                                    <img src="/plus.png" alt="Add" class="add">
                                 </button>
                                 <button v-else :disabled="disableCollections" @click="removeFromCollection(collection)">
-                                    <img src="/minus.png" alt="Remove" class="w-6 h-6 rounded-full bg-red-600">
+                                    <img src="/minus.png" alt="Remove" class="remove">
                                 </button>
                                 <p>{{ collection.name }}</p>
                             </div>
                             <div class="collection">
                                 <form @submit="createCollection">
                                     <button>
-                                        <img src="/plus.png" alt="Add" class="w-6 h-6 rounded-full bg-green-600">
+                                        <img src="/plus.png" alt="Add" class="add">
                                     </button>
                                     <input type="text" placeholder="New collection" :value="this.newCollection" @change="handleChange">
                                 </form>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="flex w-full max-w-[400px] justify-around" v-else>
+                    <div class="likes">
+                        <button disabled>
+                            <img src="/liked.png" alt="Favorite">
+                        </button>
+                        <p class="likeText">{{this.cocktail.likes}}</p>
+                    </div>
+                    <div class="popover"></div>
                 </div>
             </div>
             <div>
@@ -211,119 +220,135 @@ export default {
 
 <style scoped>
 
-section {
-    display: flex;
-    flex-wrap: wrap;
-    width: 80%;
-    margin: 16px 0px;
-    gap: 16px;
-}
+    section {
+        display: flex;
+        flex-wrap: wrap;
+        width: 80%;
+        margin: 16px 0px;
+        gap: 16px;
+    }
 
-h1 {
-    font-size: 20px;
-    line-height: 28px;
-    color: #F5D7DB;
-    font-weight: 500;
-    letter-spacing: 0.025em;
-}
+    h1 {
+        font-size: 20px;
+        line-height: 28px;
+        color: #F5D7DB;
+        font-weight: 500;
+        letter-spacing: 0.025em;
+    }
 
-h2, .likeText {
-    font-size: 18px;
-    line-height: 24px;
-    color: #BD83B8;
-    font-weight: 500;
-    letter-spacing: 0.025em;
-}
+    h2, .likeText {
+        font-size: 18px;
+        line-height: 24px;
+        color: #BD83B8;
+        font-weight: 500;
+        letter-spacing: 0.025em;
+    }
 
-p:not(.likeText), li {
-    font-size: 16px;
-    line-height: 24px;
-    color: white;
-    font-weight: 400;
-    letter-spacing: 0.025em;
-}
+    p:not(.likeText), li {
+        font-size: 16px;
+        line-height: 24px;
+        color: white;
+        font-weight: 400;
+        letter-spacing: 0.025em;
+    }
 
-.drink {
-    width: clamp(150px, 100%, 400px);
-    aspect-ratio: 1/1;
-    justify-self: center;
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    border-radius: 10px;
-}
+    .drink {
+        width: clamp(150px, 100%, 400px);
+        aspect-ratio: 1/1;
+        justify-self: center;
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        border-radius: 10px;
+    }
 
-.likes {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
+    .likes {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        height: 38px;
+    }
 
-.likes button {
-    width: 25px;
-}
+    .likes button {
+        width: 25px;
+    }
 
-.collection {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
+    .collection {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
 
-.collection > p {
-    text-wrap: wrap;
-}
+    .collection img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+    }
 
-.collection form {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    width: 100%;
-}
+    .add {
+        background-color: rgb(22 163 74);
+    }
 
-input {
-    border-radius: 4px;
-    background: #F5D7DB;
-    border: solid 1px #BD83B8;
-    padding: 2px 4px;
-    height: 24px;
-    width: 170px;
-}
+    .remove {
+        background-color: rgb(220 38 38);
+    }
 
-.popover {
-    overflow: hidden;
-}
+    .collection > p {
+        text-wrap: wrap;
+    }
 
-.popover .popoverButton {
-    border: none;
-    outline: none;
-    margin: 0;
-    background-color: inherit;
-    padding: 7px 8px;
-    font-size: 18px;
-    line-height: 24px;
-    color: #BD83B8;
-    font-weight: 500;
-    letter-spacing: 0.025em;
-}
+    .collection form {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        width: 100%;
+    }
 
-.collections {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    overflow: hidden;
-    background-color: #BD83B8;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    min-width: 150px;
-    gap: 10px;
-    height: 0;
-    z-index: 1;
-}
+    input {
+        border-radius: 4px;
+        background: #F5D7DB;
+        border: solid 1px #BD83B8;
+        padding: 2px 4px;
+        height: 24px;
+        width: 170px;
+    }
 
-.popover:hover .collections, .popover:focus .collections {
-    height: auto;
-    padding: 5px;
-}
+    .popover {
+        overflow: hidden;
+        width: 162px;
+    }
 
-.popover:hover .popoverButton {
-    background-color: #473E66;
-}
+    .popover .popoverButton {
+        border: none;
+        outline: none;
+        margin: 0;
+        background-color: inherit;
+        padding: 7px 8px;
+        font-size: 18px;
+        line-height: 24px;
+        color: #BD83B8;
+        font-weight: 500;
+        letter-spacing: 0.025em;
+    }
+
+    .collections {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        overflow: hidden;
+        background-color: #BD83B8;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        min-width: 150px;
+        gap: 10px;
+        height: 0;
+        z-index: 1;
+    }
+
+    .popover:hover .collections, .popover:focus .collections {
+        height: auto;
+        padding: 5px;
+    }
+
+    .popover:hover .popoverButton {
+        background-color: #473E66;
+    }
 
 </style>

@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-export const BASE_URL = 'http://localhost:3001'
+export const BASE_URL = 'https://secret-cellar-79c3261b8917.herokuapp.com/'
 
 const Client = Axios.create({ baseURL: BASE_URL })
 

@@ -1,12 +1,12 @@
 <template>
-  <section id="search" class="flex flex-col items-center w-4/5">
-    <form @submit="searchCocktails" class="my-4">
-      <label for="ingredientFilter" class="mr-2 text-xl text-[#F5D7DB] font-medium tracking-wide">Browse by alcohol:</label>
-      <select id="ingredientFilter" v-model="selectedAlcohol" @change="handleChange" class="rounded px-1 py-0.5 border border-[#BD83B8] bg-[#F5D7DB]">
+  <section>
+    <form @submit="searchCocktails">
+      <label for="ingredientFilter">Browse by alcohol:</label>
+      <select id="ingredientFilter" v-model="selectedAlcohol" @change="handleChange">
         <option v-for="ingredient in ingredients" :key="ingredient" :value="ingredient">{{ ingredient }}</option>
       </select>
     </form>
-    <div id="results" v-if="searchResults" class="flex flex-wrap justify-center gap-4">
+    <div v-if="searchResults" class="results">
         <CocktailCard v-for="drink in searchResults" :key="drink.idDrink" :name="drink.strDrink" :category="drink.strCategory" :image_url="drink.strDrinkThumb" @click="selectDrink(drink.idDrink)"/>
     </div>
   </section>
@@ -49,3 +49,39 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    gap: 16px;
+    margin: 16px 0px;
+  }
+
+  label {
+    font-size: 20px;
+    line-height: 28px;
+    color: #F5D7DB;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    margin-right: 8px;
+  }
+
+  select {
+    border-radius: 4px;
+    background: #F5D7DB;
+    border: solid 1px #BD83B8;
+    padding: 2px 4px;
+    height: 28px;
+  }
+  .results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+
+</style>

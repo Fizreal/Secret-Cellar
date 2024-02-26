@@ -24,5 +24,8 @@ export const collections = reactive({
       .indexOf(cocktail._id)
     if (idx === -1) return
     this.collections[collection].drinks.splice(idx, 1)
+  },
+  signOut() {
+    this.collections = {}
   }
 })
