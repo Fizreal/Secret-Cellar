@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="min-h-screen bg-[#1B3358]">
+  <div id="app" class="min-h-screen">
     <NavBar />
     <main class="flex justify-center">
       <router-view></router-view>

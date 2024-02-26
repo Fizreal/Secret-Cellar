@@ -1,5 +1,8 @@
 <template>
-  <section>
+  <section v-if="!this.user">
+    <UnauthenticatedUser />
+  </section>
+  <section v-else>
     <h1>Create Cocktail</h1>
     <form @submit="handleSubmit">
       <fieldset>
@@ -131,6 +134,8 @@
 
 <script>
 import { createCocktail } from '@/services/cocktailServices';
+import { authenticated } from '@/authenticated';
+import UnauthenticatedUser from '@/components/UnauthenticatedUser.vue';
 
 const languages = ['en', 'fr', 'de', 'it', 'es']
 const categories = ['Ordinary Drink', 'Cocktail', 'Shot', 'Punch/Party Drink', 'Other']
@@ -161,7 +166,13 @@ export default {
       instruction: '',
     }
   }),
+  components: {
+    UnauthenticatedUser
+  },
   computed: {
+    user() {
+      return authenticated.user
+    },
     availableLanguages() {
       return languages.filter(language => !this.formValues.instructions.some(instruction => instruction.language === language))
     },

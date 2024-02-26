@@ -15,7 +15,7 @@ export const communityCreations = async () => {
   return response.data
 }
 
-export const recentCreqtions = async () => {
+export const recentCreations = async () => {
   const response = await Client.get('/cocktail/recent')
   return response.data
 }

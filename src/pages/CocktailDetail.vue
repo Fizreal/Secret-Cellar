@@ -317,7 +317,7 @@ input {
     z-index: 1;
 }
 
-.popover:hover .collections {
+.popover:hover .collections, .popover:focus .collections {
     height: auto;
     padding: 5px;
 }

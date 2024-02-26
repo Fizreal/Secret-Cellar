@@ -1,5 +1,8 @@
 <template>
-  <section>
+  <section v-if="!this.user">
+    <UnauthenticatedUser />
+  </section>
+  <section v-else>
     <button @click="toggleCreateModal" aria-label="Create collection" class="modalButton">
       <img src="/plus.png" alt="Plus">
       <p>New Collection</p>
@@ -35,6 +38,8 @@
 <script>
 import { collections } from '@/collections';
 import { createCollection } from '@/services/collectionServices';
+import { authenticated } from '@/authenticated';
+import UnauthenticatedUser from '@/components/UnauthenticatedUser.vue';
 
 export default {
   name: 'CocktailCollections',
@@ -42,7 +47,13 @@ export default {
     showCreateModal: false,
     newCollection: '',
   }),
+  components: {
+    UnauthenticatedUser
+  },
   computed: {
+    user() {
+      return authenticated.user
+    },
     collections() {
       let availableCollections = []
       let collectionNames = Object.keys(collections.collections)

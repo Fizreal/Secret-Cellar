@@ -3,7 +3,7 @@
       <nav :class="(expandNav) ? 'expanded' : ''">
         <router-link to="/" class="home">
           <img src="/logo.png" alt="Logo" class="logo">
-          <h1>Site name</h1>
+          <p>Secret Cellar</p>
         </router-link>
         <div class="dropdown">
           <button class="dropdownButton">Browse Drinks</button>
@@ -17,7 +17,7 @@
           <button class="dropdownButton">Community</button>
           <div class="content">
             <router-link to="/community">Search</router-link>
-            <router-link to="/community/new">Create Drink</router-link>
+            <router-link to="/community/new" v-if="user" >Create Drink</router-link>
           </div>
         </div>
         <div class="dropdown" v-if="user">
@@ -37,23 +37,22 @@
 
 <script>
 import { authenticated } from '@/authenticated';
-import { watchEffect } from 'vue';
 
 export default {
   name: 'NavBar',
   data: () => ({
     expandNav: false,
-    user: authenticated.user
   }),
-  mounted() {
-    watchEffect(() => {
-      this.user = authenticated.user;
-    });
+  computed: {
+    user() {
+      return authenticated.user;
+    }
   },
   methods: {
     handleSignOut () {
       authenticated.signOut();
       this.user = authenticated.user;
+      this.$router.push('/');
     },
     toggleNav () {
       this.expandNav = !this.expandNav;
