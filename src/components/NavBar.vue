@@ -71,7 +71,6 @@ export default {
     background-color: #06142E;
     color: white;
     padding-right: 75px;
-    height: 52px;
   }
 
   .home {
@@ -178,6 +177,11 @@ export default {
       aspect-ratio: 1/1;
       height: 52px;
       padding: 12px;
+    }
+
+    .expand img {
+      width: 28px;
+      height: 28px;
     }
 
     nav.expanded .dropdown {
