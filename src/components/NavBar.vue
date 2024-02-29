@@ -1,34 +1,34 @@
 <template>
     <header>
       <nav :class="(expandNav) ? 'expanded' : ''">
-        <router-link to="/" class="home">
+        <router-link to="/" class="home"  @click="closeNav">
           <img src="/logo.png" alt="Logo" class="logo">
           <p>Secret Cellar</p>
         </router-link>
-        <div class="dropdown">
-          <button class="dropdownButton">Browse Drinks</button>
+        <div :class="expandedDropdown.drinks ? 'dropdown expanded' : 'dropdown'">
+          <button class="dropdownButton" @click="expandDropdown('drinks')">Browse Drinks</button>
           <div class="content">
-            <router-link to="/cocktails/search">By Name</router-link>
-            <router-link to="/cocktails/ingredient">By Ingredients</router-link>
-            <router-link to="/cocktails/browse">Alphabetically</router-link>
+            <router-link to="/cocktails/search" @click="closeNav" >By Name</router-link>
+            <router-link to="/cocktails/ingredient" @click="closeNav" >By Ingredients</router-link>
+            <router-link to="/cocktails/browse" @click="closeNav" >Alphabetically</router-link>
           </div>
         </div>
-        <div class="dropdown">
-          <button class="dropdownButton">Community</button>
+        <div :class="'dropdown' + (expandedDropdown.community ? ' expanded' : '')">
+          <button class="dropdownButton" @click="expandDropdown('community')">Community</button>
           <div class="content">
-            <router-link to="/community">Search</router-link>
-            <router-link to="/community/new" v-if="user" >Create Drink</router-link>
+            <router-link to="/community" @click="closeNav" >Search</router-link>
+            <router-link to="/community/new" v-if="user" @click="closeNav" >Create Drink</router-link>
           </div>
         </div>
-        <div class="dropdown" v-if="user">
-          <button class="dropdownButton">Profile</button>
+        <div :class="'dropdown' + (expandedDropdown.profile ? ' expanded' : '')" v-if="user">
+          <button class="dropdownButton" @click="expandDropdown('profile')">Profile</button>
           <div class="content">
-            <router-link to="/profile/collections/favorites">Favorites</router-link>
-            <router-link to="/profile/collections">Collections</router-link>
-            <button @click="handleSignOut">Sign out</button>
+            <router-link to="/profile/collections/favorites" @click="closeNav" >Favorites</router-link>
+            <router-link to="/profile/collections" @click="closeNav" >Collections</router-link>
+            <button @click="handleSignOut" >Sign out</button>
           </div>
         </div>
-        <router-link to="/login" v-else class="signin">Sign In</router-link>        
+        <router-link to="/login" v-else class="signin" @click="closeNav" >Sign In</router-link>        
         <button @click="toggleNav" aria-label="Expand Nav" class="expand"><img src="/hamburger.png" alt="Open"></button>
       </nav>
     </header>
@@ -43,6 +43,7 @@ export default {
   name: 'NavBar',
   data: () => ({
     expandNav: false,
+    expandedDropdown: {drinks: false, community: false, profile: false}
   }),
   computed: {
     user() {
@@ -53,10 +54,20 @@ export default {
     handleSignOut () {
       authenticated.signOut()
       collections.signOut()
+      this.expandNav = false;
       this.$router.push('/');
     },
     toggleNav () {
       this.expandNav = !this.expandNav;
+    },
+    closeNav () {
+      this.expandNav = false;
+      this.expandedDropdown = {drinks: false, community: false, profile: false};
+    },
+    expandDropdown (dropdown) {
+      const current = this.expandedDropdown[dropdown];
+      this.expandedDropdown = {drinks: false, community: false, profile: false};
+      this.expandedDropdown[dropdown] = !current;
     }
   }
 }
@@ -145,19 +156,8 @@ export default {
     transition: all 0.3s ease-in-out;
   }
 
-  .dropdown:hover .dropdownButton {
-    background-color: #473E66;
-  }
-
-  .content a:hover, .content button:hover {
-    background-color: #F5D7DB;
-  }
-
-  .dropdown:hover .content {
-    height: auto;
-  }
-
   @media screen and (max-width: 600px) {
+
     nav a:not(:first-child), .dropdown .dropdownButton{
       display: none;
     }
@@ -193,10 +193,6 @@ export default {
       overflow: hidden;
     }
 
-    .dropdown:hover .content {
-      height: auto;
-    }
-
     nav.expanded .content {
       position: relative;
     }
@@ -218,6 +214,35 @@ export default {
       width: 100%;
       text-align: left;
     }
+
   }
   
+  @media (hover: hover) {
+
+    .dropdown:hover .dropdownButton {
+      background-color: #473E66;
+    }
+
+    .content a:hover, .content button:hover {
+      background-color: #F5D7DB;
+    }
+
+    .dropdown:hover .content {
+      height: auto;
+    }
+
+  }
+
+  @media (hover: none) {
+
+    .drowndown.expanded .dropdownButton {
+      background-color: #473E66;
+    }
+
+    .dropdown.expanded .content {
+      height: auto;
+    }
+
+  }
+
 </style>

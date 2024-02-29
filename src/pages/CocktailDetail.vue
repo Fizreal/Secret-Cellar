@@ -14,8 +14,8 @@
                         </button>
                         <p class="likeText">{{this.cocktail.likes}}</p>
                     </div>
-                    <div class="popover">
-                        <button class="popoverButton">Add to collection</button>
+                    <div :class="expandPopover ? 'popover expanded' : 'popover'">
+                        <button class="popoverButton" @click="() => this.expandPopover = !this.expandPopover">Add to collection</button>
                         <div class="collections">
                             <div class="collection" v-for="collection in collections" :key="collection.id">
                                 <button @click="addToCollection(collection)" v-if="!collection.inCollection" :disabled="disableCollections">
@@ -85,7 +85,8 @@ export default {
         disableFavorite: false,
         disableCollections: false,
         language: '',
-        newCollection: ''
+        newCollection: '',
+        expandPopover: false
     }),
     mounted() {
         this.getCocktail()
@@ -342,13 +343,30 @@ export default {
         z-index: 1;
     }
 
-    .popover:hover .collections, .popover:focus .collections {
-        height: auto;
-        padding: 5px;
+    @media (hover: hover) {
+
+        .popover:hover .collections, .popover:focus .collections {
+            height: auto;
+            padding: 5px;
+        }
+
+        .popover:hover .popoverButton {
+            background-color: #473E66;
+        }
+
     }
 
-    .popover:hover .popoverButton {
-        background-color: #473E66;
+    @media (hover: none) {
+
+        .popover.expanded .collections {
+            height: auto;
+            padding: 5px;
+        }
+
+        .popover.expanded .popoverButton {
+            background-color: #473E66;
+        }
+
     }
 
 </style>
