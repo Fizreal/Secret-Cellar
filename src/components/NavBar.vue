@@ -71,6 +71,7 @@ export default {
     background-color: #06142E;
     color: white;
     padding-right: 75px;
+    height: 52px;
   }
 
   .home {
@@ -161,18 +162,16 @@ export default {
     nav a:not(:first-child), .dropdown .dropdownButton{
       display: none;
     }
-    .expand {
-      float: right;
-      display: block;
-    }
-
+    
     nav.expanded {
       position: relative;
       display: block;
       padding: 0;
     }
-
+    
     .expand {
+      float: right;
+      display: block;
       position: absolute;
       right: 0;
       top: 0;
