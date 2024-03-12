@@ -44,15 +44,15 @@ You will be able to browse the database of available drinks as well as community
 
 **Home page (desktop)**
 
-![Imgur]()
+![Imgur](https://i.imgur.com/KeBIkuR.png)
 
 **Browse database (tablet)**
 
-![Imgur]()
+![Imgur](https://i.imgur.com/RJm9SYb.png)
 
 **View drink details (mobile)**
 
-![Imgur]()
+![Imgur](https://i.imgur.com/dIdxFTl.png)
 
 ---
 
